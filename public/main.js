@@ -1784,13 +1784,13 @@ var AuthService = /** @class */ (function () {
     AuthService.prototype.registerUser = function (user) {
         var headers = new _angular_http__WEBPACK_IMPORTED_MODULE_1__["Headers"]();
         headers.append('content-type', 'application/json');
-        return this.http.post('http://localhost:8080/users/register', user, { headers: headers })
+        return this.http.post('users/register', user, { headers: headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (res) { return res.json(); }));
     };
     AuthService.prototype.authenticateUser = function (user) {
         var headers = new _angular_http__WEBPACK_IMPORTED_MODULE_1__["Headers"]();
         headers.append('content-type', 'application/json');
-        return this.http.post('http://localhost:8080/users/authenticate', user, { headers: headers })
+        return this.http.post('users/authenticate', user, { headers: headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (res) { return res.json(); }));
     };
     AuthService.prototype.loadToken = function () {
@@ -1821,14 +1821,14 @@ var AuthService = /** @class */ (function () {
     AuthService.prototype.updateProfilePic = function (fd) {
         var headers = new _angular_http__WEBPACK_IMPORTED_MODULE_1__["Headers"]();
         headers.set("Authorization", localStorage.getItem('user'));
-        return this.http.put('http://localhost:8080/users/photo', fd, { headers: headers }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (res) { return res.json(); }));
+        return this.http.put('users/photo', fd, { headers: headers }).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (res) { return res.json(); }));
     };
     AuthService.prototype.getProfile = function () {
         this.loadToken();
         var headers = new _angular_http__WEBPACK_IMPORTED_MODULE_1__["Headers"]();
         headers.set("Authorization", this.authToken);
         headers.set('content-type', 'application/json');
-        return this.http.get('http://localhost:8080/users/profile', { headers: headers })
+        return this.http.get('users/profile', { headers: headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (res) { return res.json(); }));
     };
     ;
@@ -1877,13 +1877,13 @@ var CommentsService = /** @class */ (function () {
     CommentsService.prototype.addComment = function (comment) {
         var headers = new _angular_http__WEBPACK_IMPORTED_MODULE_1__["Headers"]();
         headers.append('content-type', 'application/json');
-        return this.http.post('http://localhost:8080/comments/addcomment', comment, { headers: headers })
+        return this.http.post('comments/addcomment', comment, { headers: headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (res) { return res.json(); }));
     };
     CommentsService.prototype.getComments = function (eventId) {
         var headers = new _angular_http__WEBPACK_IMPORTED_MODULE_1__["Headers"]();
         headers.set("Authorization", eventId);
-        return this.http.get('http://localhost:8080/comments/getcomments', { headers: headers })
+        return this.http.get('comments/getcomments', { headers: headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (res) { return res.json(); }));
     };
     ;
@@ -1892,7 +1892,7 @@ var CommentsService = /** @class */ (function () {
             commentId: commentId
         };
         console.log(comment);
-        return this.http.put('http://localhost:8080/comments/deletecomment', comment)
+        return this.http.put('comments/deletecomment', comment)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (res) { return res.json(); }));
     };
     CommentsService.prototype.editComment = function (commentId, commentText) {
@@ -1901,7 +1901,7 @@ var CommentsService = /** @class */ (function () {
             commentText: commentText
         };
         console.log(comment);
-        return this.http.put('http://localhost:8080/comments/editcomment', comment)
+        return this.http.put('comments/editcomment', comment)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (res) { return res.json(); }));
     };
     CommentsService = __decorate([
@@ -2002,14 +2002,14 @@ var EventsService = /** @class */ (function () {
     EventsService.prototype.addEvent = function (event) {
         var headers = new _angular_http__WEBPACK_IMPORTED_MODULE_1__["Headers"]();
         headers.append('content-type', 'application/json');
-        return this.http.post('http://localhost:8080/events/addevents', event, { headers: headers })
+        return this.http.post('events/addevents', event, { headers: headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (res) { return res.json(); }));
     };
     EventsService.prototype.getEvents = function () {
         var _this = this;
         var headers = new _angular_http__WEBPACK_IMPORTED_MODULE_1__["Headers"]();
         headers.set('content-type', 'application/json');
-        return this.http.get('http://localhost:8080/events/getevents', { headers: headers })
+        return this.http.get('events/getevents', { headers: headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (res) { return _this.allEvents = res.json(); }));
     };
     ;
@@ -2020,7 +2020,7 @@ var EventsService = /** @class */ (function () {
             userId: userId,
             image: image
         };
-        return this.http.put('http://localhost:8080/events/delete', info)
+        return this.http.put('events/delete', info)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (res) { return res.json(); }));
     };
     EventsService = __decorate([
