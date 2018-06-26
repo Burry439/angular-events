@@ -1951,19 +1951,19 @@ var EventsService = /** @class */ (function () {
         var _this = this;
         var headers = new _angular_http__WEBPACK_IMPORTED_MODULE_1__["Headers"]();
         headers.set("Authorization", eventId);
-        return this.http.get('http://localhost:8080/events/getsingleevents', { headers: headers })
+        return this.http.get('events/getsingleevents', { headers: headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (res) { return _this.allEvents = res.json(); }));
     };
     EventsService.prototype.getUsersAttendingEvents = function (userId) {
         var headers = new _angular_http__WEBPACK_IMPORTED_MODULE_1__["Headers"]();
         headers.set("Authorization", userId);
-        return this.http.get('http://localhost:8080/users/getattendingevents', { headers: headers })
+        return this.http.get('users/getattendingevents', { headers: headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (res) { return res.json(); }));
     };
     EventsService.prototype.getUsersEvents = function (userId) {
         var headers = new _angular_http__WEBPACK_IMPORTED_MODULE_1__["Headers"]();
         headers.set("Authorization", userId);
-        return this.http.get('http://localhost:8080/users/getcreatedevents', { headers: headers })
+        return this.http.get('users/getcreatedevents', { headers: headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (res) { return res.json(); }));
     };
     EventsService.prototype.leaveEvent = function (eventId, userId) {
@@ -1973,7 +1973,7 @@ var EventsService = /** @class */ (function () {
         };
         var headers = new _angular_http__WEBPACK_IMPORTED_MODULE_1__["Headers"]();
         headers.append('content-type', 'application/json');
-        return this.http.put('http://localhost:8080/events/leaveevent', event)
+        return this.http.put('events/leaveevent', event)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (res) { return res.json(); }));
     };
     EventsService.prototype.joinEvent = function (eventId, userId) {
@@ -1984,19 +1984,19 @@ var EventsService = /** @class */ (function () {
         console.log(userInfo);
         var headers = new _angular_http__WEBPACK_IMPORTED_MODULE_1__["Headers"]();
         headers.append('content-type', 'application/json');
-        return this.http.post('http://localhost:8080/events/join', userInfo, { headers: headers })
+        return this.http.post('events/join', userInfo, { headers: headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (res) { return res.json(); }));
     };
     EventsService.prototype.updateEventImage = function (fd, eventId) {
         var headers = new _angular_http__WEBPACK_IMPORTED_MODULE_1__["Headers"]();
         headers.set("Authorization", eventId);
-        return this.http.put('http://localhost:8080/events/photo', fd, { headers: headers })
+        return this.http.put('events/photo', fd, { headers: headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (res) { return res.json(); }));
     };
     EventsService.prototype.editEvent = function (event) {
         var headers = new _angular_http__WEBPACK_IMPORTED_MODULE_1__["Headers"]();
         headers.append('content-type', 'application/json');
-        return this.http.put('http://localhost:8080/events/editevents', event, { headers: headers })
+        return this.http.put('events/editevents', event, { headers: headers })
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (res) { return res.json(); }));
     };
     EventsService.prototype.addEvent = function (event) {
