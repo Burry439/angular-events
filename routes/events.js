@@ -229,14 +229,7 @@ router.put('/editevents',(req,res,next)=>{
 
 router.put('/delete',(req,res,next) =>{
     const eventId = req.body.eventId
-    const userId = req.body.userId
-
-    if(req.body.image !== 'uploads/default.png')
-    {   
-       // console.log("inside delete photo >"+ req.body.image + " < inside delete photo")
-        fs.unlinkSync(req.body.image)
-    }
-    
+    const userId = req.body.userId    
     User.findById(userId,(err,user)=>{
         for(i = 0;  i < user.events.length; i++)
         {
@@ -272,13 +265,9 @@ router.put('/delete',(req,res,next) =>{
                 console.log(err)
             }else
             {
+                console.log("should delte")
             }
-        })
-   
-    
-
-
-   
+    })  
 })
 
 router.get('/getsingleevents', (req,res)=>{
