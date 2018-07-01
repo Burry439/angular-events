@@ -77,7 +77,7 @@ router.put('/photo', upload.single('eventImage'), (req,res,next)=>{
         console.log(result) 
         Event.findOne({_id:req.headers.authorization}, (err,event)=>{
             //console.log(event.name)
-            event.image = result.url
+            event.image = result.secure_url
             event.save((err,updatedObject)=>{
                // console.log(event.image)
                 console.log("upload phohot > "+ updatedObject.image +" < photo")

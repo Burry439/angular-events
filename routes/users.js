@@ -81,7 +81,7 @@ router.put('/photo', upload.single('profilePic'), (req,res,next)=>
 
         User.findById(id.id, (err,user)=>{
             //console.log(user.name)
-            user.profilePic = result.url
+            user.profilePic = result.secure_url
             user.save((err,updatedObject)=>{
                 //  console.log(updatedObject)
                 res.json(updatedObject)
