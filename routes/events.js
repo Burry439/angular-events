@@ -5,6 +5,16 @@ const Event = require('../models/event')
 const config = require("../config/database")
 const multer = require('multer')
 const fs = require('fs');
+var cloudinary = require('cloudinary');
+
+
+cloudinary.config({ 
+    cloud_name: 'dude439', 
+    api_key: '833245911756313', 
+    api_secret: 'aBPLhs-F8eFrzo-1TVlN1o1b_ms' 
+  });
+
+
 
 const storage = multer.diskStorage({
     destination: (req,file,cb)=>{
@@ -35,29 +45,46 @@ const upload = multer({
 })
 /////////////////////////////////////////////////////////////////////
 
-router.put('/photo', upload.single('eventImage'), (req,res,next)=>
-{   
-    console.log(req.file)
+// router.put('/photo', upload.single('eventImage'), (req,res,next)=>
+// {   
+//     console.log(req.file)
    
-    Event.findOne({_id:req.headers.authorization}, (err,event)=>{
+//     Event.findOne({_id:req.headers.authorization}, (err,event)=>{
 
-        if(event.image !== 'uploads/default.png')
-        {   
-            console.log("inside delete photo >"+ event.image + " < inside delete photo")
-            fs.unlinkSync(event.image)
-        }
+//         if(event.image !== 'uploads/default.png')
+//         {   
+//             console.log("inside delete photo >"+ event.image + " < inside delete photo")
+//             fs.unlinkSync(event.image)
+//         }
 
 
-        //console.log(event.name)
-        event.image = req.file.path
-        event.save((err,updatedObject)=>{
-           // console.log(event.image)
-            console.log("upload phohot > "+ updatedObject.image +" < photo")
-            res.json(updatedObject.image)
-        })
+//         //console.log(event.name)
+//         event.image = req.file.path
+//         event.save((err,updatedObject)=>{
+//            // console.log(event.image)
+//             console.log("upload phohot > "+ updatedObject.image +" < photo")
+//             res.json(updatedObject.image)
+//         })
         
-    })
+//     })
    
+// })
+
+
+router.put('/photo', upload.single('eventImage'), (req,res,next)=>{   
+    console.log(req.file)
+    cloudinary.uploader.upload(req.file.path, function(result) { 
+        console.log(result) 
+        Event.findOne({_id:req.headers.authorization}, (err,event)=>{
+            //console.log(event.name)
+            event.image = result.url
+            event.save((err,updatedObject)=>{
+               // console.log(event.image)
+                console.log("upload phohot > "+ updatedObject.image +" < photo")
+                res.json(updatedObject.image)
+        })          
+     })
+ });
 })
 
 

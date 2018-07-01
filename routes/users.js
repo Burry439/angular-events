@@ -5,10 +5,22 @@ const passport = require('passport')
 const jwt = require("jsonwebtoken")
 const config = require("../config/database")
 const multer = require('multer')
+var cloudinary = require('cloudinary');
 
 const Event = require('../models/event')
 
 ////////////for storing files/////////////////////////
+cloudinary.config({ 
+    cloud_name: 'dude439', 
+    api_key: '833245911756313', 
+    api_secret: 'aBPLhs-F8eFrzo-1TVlN1o1b_ms' 
+  });
+////////////////////////////////////////////////////
+
+
+
+
+
 const storage = multer.diskStorage({
     destination: (req,file,cb)=>{
         cb(null, './uploads/')
@@ -38,22 +50,49 @@ const upload = multer({
 })
 /////////////////////////////////////////////////////////////////////
 
+// router.put('/photo', upload.single('profilePic'), (req,res,next)=>
+// {   
+//     //console.log(req.file.filename)
+//     //console.log(req.headers.authorization)
+//     const id = JSON.parse(req.headers.authorization)
+//     console.log(id)
+//     let image = {image: req.file.path}
+//     User.findById(id.id, (err,user)=>{
+//         //console.log(user.name)
+//         user.profilePic = req.file.path
+//         user.save((err,updatedObject)=>{
+//             //  console.log(updatedObject)
+//             res.json(updatedObject)
+//         })
+        
+//     })
+  
+    
+// })
+
 router.put('/photo', upload.single('profilePic'), (req,res,next)=>
 {   
     //console.log(req.file.filename)
     //console.log(req.headers.authorization)
     const id = JSON.parse(req.headers.authorization)
-    console.log(id)
-    let image = {image: req.file.path}
-    User.findById(id.id, (err,user)=>{
-        //console.log(user.name)
-        user.profilePic = req.file.path
-        user.save((err,updatedObject)=>{
-            //  console.log(updatedObject)
-            res.json(updatedObject)
+    
+    cloudinary.uploader.upload(req.file.path, function(result) { 
+        console.log("resrult : " + result.url) 
+
+        User.findById(id.id, (err,user)=>{
+            //console.log(user.name)
+            user.profilePic = result.url
+            user.save((err,updatedObject)=>{
+                //  console.log(updatedObject)
+                res.json(updatedObject)
+            })
+            
         })
-        
-    })
+
+      });
+
+
+  
   
     
 })

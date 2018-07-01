@@ -129,12 +129,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_material_radio__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! @angular/material/radio */ "./node_modules/@angular/material/esm5/radio.es5.js");
 /* harmony import */ var ng_flash_messages__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ng-flash-messages */ "./node_modules/ng-flash-messages/ng-flash-messages.umd.js");
 /* harmony import */ var ng_flash_messages__WEBPACK_IMPORTED_MODULE_33___default = /*#__PURE__*/__webpack_require__.n(ng_flash_messages__WEBPACK_IMPORTED_MODULE_33__);
+/* harmony import */ var _cloudinary_angular_5_x__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! @cloudinary/angular-5.x */ "./node_modules/@cloudinary/angular-5.x/index.js");
+/* harmony import */ var _cloudinary_angular_5_x__WEBPACK_IMPORTED_MODULE_34___default = /*#__PURE__*/__webpack_require__.n(_cloudinary_angular_5_x__WEBPACK_IMPORTED_MODULE_34__);
+/* harmony import */ var cloudinary_core__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! cloudinary-core */ "./node_modules/cloudinary-core/cloudinary-core.js");
+/* harmony import */ var cloudinary_core__WEBPACK_IMPORTED_MODULE_35___default = /*#__PURE__*/__webpack_require__.n(cloudinary_core__WEBPACK_IMPORTED_MODULE_35__);
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -223,7 +229,8 @@ var AppModule = /** @class */ (function () {
                     libraries: ["places"]
                 }),
                 ngx_slick__WEBPACK_IMPORTED_MODULE_28__["SlickModule"].forRoot(),
-                ng_flash_messages__WEBPACK_IMPORTED_MODULE_33__["NgFlashMessagesModule"].forRoot()
+                ng_flash_messages__WEBPACK_IMPORTED_MODULE_33__["NgFlashMessagesModule"].forRoot(),
+                _cloudinary_angular_5_x__WEBPACK_IMPORTED_MODULE_34__["CloudinaryModule"].forRoot(cloudinary_core__WEBPACK_IMPORTED_MODULE_35__, { cloud_name: 'dude439' }),
             ],
             entryComponents: [_components_events_events_component__WEBPACK_IMPORTED_MODULE_17__["EventsComponent"], _components_events_single_event_single_event_component__WEBPACK_IMPORTED_MODULE_18__["SingleEventComponent"], _components_profile_users_created_events_users_created_events_component__WEBPACK_IMPORTED_MODULE_24__["UsersCreatedEventsComponent"]],
             providers: [_services_auth_service__WEBPACK_IMPORTED_MODULE_8__["AuthService"], _services_gaurd_service__WEBPACK_IMPORTED_MODULE_10__["GaurdService"]],
