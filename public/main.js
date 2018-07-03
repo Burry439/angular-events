@@ -133,12 +133,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _cloudinary_angular_5_x__WEBPACK_IMPORTED_MODULE_34___default = /*#__PURE__*/__webpack_require__.n(_cloudinary_angular_5_x__WEBPACK_IMPORTED_MODULE_34__);
 /* harmony import */ var cloudinary_core__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! cloudinary-core */ "./node_modules/cloudinary-core/cloudinary-core.js");
 /* harmony import */ var cloudinary_core__WEBPACK_IMPORTED_MODULE_35___default = /*#__PURE__*/__webpack_require__.n(cloudinary_core__WEBPACK_IMPORTED_MODULE_35__);
+/* harmony import */ var _components_create_event_create_event_component__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./components/create-event/create-event.component */ "./src/app/components/create-event/create-event.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -200,7 +202,8 @@ var AppModule = /** @class */ (function () {
                 _components_profile_users_attending_events_users_attending_events_component__WEBPACK_IMPORTED_MODULE_25__["UsersAttendingEventsComponent"],
                 _components_events_single_event_comments_comments_component__WEBPACK_IMPORTED_MODULE_29__["CommentsComponent"],
                 _pipes_filtername_pipe__WEBPACK_IMPORTED_MODULE_30__["FilterByNamePipe"],
-                _pipes_filterlocation_pipe__WEBPACK_IMPORTED_MODULE_31__["FilterlocationPipe"]
+                _pipes_filterlocation_pipe__WEBPACK_IMPORTED_MODULE_31__["FilterlocationPipe"],
+                _components_create_event_create_event_component__WEBPACK_IMPORTED_MODULE_36__["CreateEventComponent"]
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
@@ -232,12 +235,210 @@ var AppModule = /** @class */ (function () {
                 ng_flash_messages__WEBPACK_IMPORTED_MODULE_33__["NgFlashMessagesModule"].forRoot(),
                 _cloudinary_angular_5_x__WEBPACK_IMPORTED_MODULE_34__["CloudinaryModule"].forRoot(cloudinary_core__WEBPACK_IMPORTED_MODULE_35__, { cloud_name: 'dude439' }),
             ],
-            entryComponents: [_components_events_events_component__WEBPACK_IMPORTED_MODULE_17__["EventsComponent"], _components_events_single_event_single_event_component__WEBPACK_IMPORTED_MODULE_18__["SingleEventComponent"], _components_profile_users_created_events_users_created_events_component__WEBPACK_IMPORTED_MODULE_24__["UsersCreatedEventsComponent"]],
+            entryComponents: [_components_events_events_component__WEBPACK_IMPORTED_MODULE_17__["EventsComponent"], _components_events_single_event_single_event_component__WEBPACK_IMPORTED_MODULE_18__["SingleEventComponent"], _components_profile_users_created_events_users_created_events_component__WEBPACK_IMPORTED_MODULE_24__["UsersCreatedEventsComponent"], _components_create_event_create_event_component__WEBPACK_IMPORTED_MODULE_36__["CreateEventComponent"]],
             providers: [_services_auth_service__WEBPACK_IMPORTED_MODULE_8__["AuthService"], _services_gaurd_service__WEBPACK_IMPORTED_MODULE_10__["GaurdService"]],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]]
         })
     ], AppModule);
     return AppModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/components/create-event/create-event.component.css":
+/*!********************************************************************!*\
+  !*** ./src/app/components/create-event/create-event.component.css ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/components/create-event/create-event.component.html":
+/*!*********************************************************************!*\
+  !*** ./src/app/components/create-event/create-event.component.html ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<label for=\"\">Create an event</label>\n<form action=\"\" (submit)=\"convertAddress()\" #f=\"ngForm\">\n    <div class=\"form-group\" >\n      <label>Event name</label>\n      <input type=\"textarea\" ngModel #eventname=ngModel name=\"eventname\" class=\"form-control\" required >\n      <span *ngIf=\"!eventname.valid && eventname.touched\">please enter a name</span>\n    </div>\n    \n    <div class=\"form-group\" >\n        <div class=\"form-group\" >\n            <label>Details</label>\n            <textarea rows=\"4\" cols=\"50\" ngModel #details=ngModel name=\"details\" class=\"form-control\" required></textarea>\n          </div>\n\n\n          <div class=\"form-group\" >\n            <label>Location</label>\n            <input type=\"text\" [(ngModel)]=\"searchLocation\" placeholder=\"Search for Location\" autocorrect=\"off\" autocapitalize=\"off\" spellcheck=\"off\" class=\"form-control\" #search ngModel #location=ngModel name=\"location\" required> \n        </div>\n\n\n          <label>date</label>\n          <input dateformat=\"dd-MMM-yyyy\" matInput [matDatepicker]=\"picker\" placeholder=\"Choose a date\" ngModel #date=ngModel name=\"date\" class=\"form-control\" required>\n          <mat-datepicker-toggle matSuffix [for]=\"picker\" ></mat-datepicker-toggle>\n          <mat-datepicker #picker touchUi=\"true\" ></mat-datepicker> \n    \n\n        \n  \n     </div>\n    <input [disabled]=\"!f.valid\" type=\"submit\" class=\"btn btn-primary\" value=\"add event\">\n    </form>\n"
+
+/***/ }),
+
+/***/ "./src/app/components/create-event/create-event.component.ts":
+/*!*******************************************************************!*\
+  !*** ./src/app/components/create-event/create-event.component.ts ***!
+  \*******************************************************************/
+/*! exports provided: CreateEventComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CreateEventComponent", function() { return CreateEventComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _services_events_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/events.service */ "./src/app/services/events.service.ts");
+/* harmony import */ var _agm_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @agm/core */ "./node_modules/@agm/core/index.js");
+/* harmony import */ var _angular_http__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm5/http.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+var __param = (undefined && undefined.__param) || function (paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+};
+
+
+
+
+
+
+var CreateEventComponent = /** @class */ (function () {
+    ////////////////////
+    function CreateEventComponent(data, dialogRef, eventsService, mapsAPILoader, ngZone, http) {
+        this.data = data;
+        this.dialogRef = dialogRef;
+        this.eventsService = eventsService;
+        this.mapsAPILoader = mapsAPILoader;
+        this.ngZone = ngZone;
+        this.http = http;
+        this.host = JSON.parse(localStorage.getItem('user'));
+        this.closeDialog = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+    }
+    //   convertAddress() 
+    //   { 
+    //      this.http.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + 
+    //      this.searchElement.nativeElement.value + '&key=AIzaSyB9apYkFiLPc7Q0onb1fFfemAB8cLVVoiI')
+    //      .subscribe(res =>{
+    //       console.log(res.json().results[0].address_components[4] + "   " + this.searchElement.nativeElement.value);
+    //      this.lat = res.json().results[0].geometry.location.lat  
+    //      this.lng = res.json().results[0].geometry.location.lng
+    //      this.state = res.json().results[0].address_components[3].long_name
+    //      this.country = res.json().results[0].address_components[4].long_name
+    //      this.formattedAddress = res.json().results[0].formatted_address
+    //      this.onAddEvent()
+    //     })
+    //  }
+    CreateEventComponent.prototype.convertAddress = function () {
+        var _this = this;
+        this.http.get('https://maps.googleapis.com/maps/api/geocode/json?address=' +
+            this.searchElement.nativeElement.value + '&key=AIzaSyB9apYkFiLPc7Q0onb1fFfemAB8cLVVoiI')
+            .subscribe(function (res) {
+            _this.lat = res.json().results[0].geometry.location.lat;
+            _this.lng = res.json().results[0].geometry.location.lng;
+            _this.formattedAddress = res.json().results[0].formatted_address;
+            for (var ac = 0; ac < res.json().results[0].address_components.length; ac++) {
+                var component = res.json().results[0].address_components[ac];
+                if (component.types.includes('sublocality') || component.types.includes('locality')) {
+                    _this.city = component.long_name;
+                }
+                else if (component.types.includes('administrative_area_level_1')) {
+                    _this.state = component.long_name;
+                }
+                else if (component.types.includes('country')) {
+                    _this.country = component.long_name;
+                }
+            }
+            _this.onAddEvent();
+        });
+    };
+    // convertAddress() { 
+    //   var geocoder; 
+    //   var address = this.searchElement.nativeElement.value; 
+    //   this.locationName = address
+    //   geocoder = new google.maps.Geocoder();
+    //   geocoder.geocode( { 'address': address}, 
+    //   (results, status)=> 
+    //   { 
+    //     if (status == google.maps.GeocoderStatus.OK) 
+    //     { 
+    //       console.log("hello")
+    //       this.addressSet = true
+    //      this.lat = results[0].geometry.location.lat()
+    //      this.lng = results[0].geometry.location.lng()  
+    //     } 
+    //     else { 
+    //   } }); } 
+    CreateEventComponent.prototype.onAddEvent = function () {
+        var _this = this;
+        var newEvent = {
+            name: this.eventform.value.eventname,
+            details: this.eventform.value.details,
+            date: this.eventform.value.date,
+            host: this.host.id,
+            attending: [],
+            image: 'uploads/default.png',
+            location: {
+                lat: this.lat,
+                lng: this.lng,
+                formattedAddress: this.formattedAddress,
+                city: this.city,
+                state: this.state,
+                country: this.country
+            }
+        };
+        this.eventsService.addEvent(newEvent).subscribe(function (res) {
+            var date = new Date(res.date);
+            var year = date.getFullYear();
+            var month = date.getMonth();
+            var day = date.getDate();
+            var time = {
+                year: year,
+                month: month,
+                day: day
+            };
+            res.date = time;
+            console.log("1");
+            _this.dialogRef.close(res);
+            console.log('2');
+        });
+    };
+    CreateEventComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.mapsAPILoader.load().then(function () {
+            var autocomplete = new google.maps.places.Autocomplete(_this.searchElement.nativeElement, { types: ["address"] });
+            autocomplete.addListener("place_changed", function () {
+                _this.ngZone.run(function () {
+                    var place = autocomplete.getPlace();
+                    if (place.geometry === undefined || place.geometry === null) {
+                        return;
+                    }
+                });
+            });
+        });
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('f'),
+        __metadata("design:type", _angular_forms__WEBPACK_IMPORTED_MODULE_2__["NgForm"])
+    ], CreateEventComponent.prototype, "eventform", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('search', { read: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"] }),
+        __metadata("design:type", Object)
+    ], CreateEventComponent.prototype, "searchElement", void 0);
+    CreateEventComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-create-event',
+            template: __webpack_require__(/*! ./create-event.component.html */ "./src/app/components/create-event/create-event.component.html"),
+            styles: [__webpack_require__(/*! ./create-event.component.css */ "./src/app/components/create-event/create-event.component.css")]
+        }),
+        __param(0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"])(_angular_material__WEBPACK_IMPORTED_MODULE_1__["MAT_DIALOG_DATA"])),
+        __metadata("design:paramtypes", [Object, _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatDialogRef"],
+            _services_events_service__WEBPACK_IMPORTED_MODULE_3__["EventsService"],
+            _agm_core__WEBPACK_IMPORTED_MODULE_4__["MapsAPILoader"],
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgZone"],
+            _angular_http__WEBPACK_IMPORTED_MODULE_5__["Http"]])
+    ], CreateEventComponent);
+    return CreateEventComponent;
 }());
 
 
@@ -251,7 +452,7 @@ var AppModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "/* .body{\r\n  background-color: ;\r\n} */\r\n\r\n.example-card {\r\n    width: 350px;\r\n    margin-left: auto;\r\n    margin-right: auto;\r\n    margin-top: 20px;\r\n    display: block;\r\n    cursor: pointer;\r\n  }\r\n\r\n.search-bar\r\n  {\r\n   \r\n    width: 50%;\r\n    margin-right: auto;\r\n    margin-left: auto;\r\n  }\r\n\r\n.example-radio-group\r\n  { \r\n    padding-top: 200px;\r\n    margin-left:25%;\r\n    \r\n  }\r\n\r\n.example-radio-button\r\n  {\r\n    margin-right:25px;\r\n  }\r\n\r\n.example-header-image {\r\n    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');\r\n    background-size: cover;\r\n  }\r\n\r\n.overlay {\r\n    position: absolute;\r\n    top: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    right: 0;\r\n    height: 100%;\r\n    width: 100%;\r\n    opacity: 0;\r\n    transition: .5s ease;\r\n    background-color:#000000;\r\n  }\r\n\r\n.example-card:hover .overlay {\r\n    opacity: 0.5;\r\n  }\r\n\r\n.text {\r\n    color: white;\r\n    font-size: 20px;\r\n    position: absolute;\r\n    top: 50%;\r\n    left: 50%;\r\n    -webkit-transform: translate(-50%, -50%);\r\n            transform: translate(-50%, -50%);\r\n    -ms-transform: translate(-50%, -50%);\r\n    text-align: center;\r\n     opacity: 1;\r\n    \r\n  }\r\n\r\n@media only screen and (max-width: 360px) {\r\n    .example-card {\r\n      width: 300px;\r\n     \r\n    }\r\n}\r\n\r\n@media only screen and (min-width: 769px) {\r\n  .example-card {\r\n    display: inline-block;\r\n    margin-left: 20px;\r\n  }\r\n}"
+module.exports = "\r\n.add-event\r\n{ \r\n  border-radius: 2em / 5em;\r\n  display: block;\r\n    width: 50%;\r\n    height: 50px;\r\n    margin-top: 20px;\r\n    margin-bottom: 20px;\r\n    margin-left: auto;\r\n    margin-right: auto;\r\n\r\n}\r\n\r\n.example-card {\r\n    width: 350px;\r\n    margin-left: auto;\r\n    margin-right: auto;\r\n    margin-top: 20px;\r\n    display: block;\r\n    cursor: pointer;\r\n  }\r\n\r\n.search-bar\r\n  {\r\n   \r\n    width: 50%;\r\n    margin-right: auto;\r\n    margin-left: auto;\r\n  }\r\n\r\n.example-radio-group\r\n  { \r\n    padding-top: 200px;\r\n    margin-left:25%;\r\n    \r\n  }\r\n\r\n.example-radio-button\r\n  {\r\n    margin-right:25px;\r\n  }\r\n\r\n.example-header-image {\r\n    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');\r\n    background-size: cover;\r\n  }\r\n\r\n.overlay {\r\n    position: absolute;\r\n    top: 0;\r\n    bottom: 0;\r\n    left: 0;\r\n    right: 0;\r\n    height: 100%;\r\n    width: 100%;\r\n    opacity: 0;\r\n    transition: .5s ease;\r\n    background-color:#000000;\r\n  }\r\n\r\n.example-card:hover .overlay {\r\n    opacity: 0.5;\r\n  }\r\n\r\n.text {\r\n    color: white;\r\n    font-size: 20px;\r\n    position: absolute;\r\n    top: 50%;\r\n    left: 50%;\r\n    -webkit-transform: translate(-50%, -50%);\r\n            transform: translate(-50%, -50%);\r\n    -ms-transform: translate(-50%, -50%);\r\n    text-align: center;\r\n     opacity: 1;\r\n    \r\n  }\r\n\r\n@media only screen and (max-width: 360px) {\r\n    .example-card {\r\n      width: 300px;\r\n     \r\n    }\r\n}\r\n\r\n@media only screen and (min-width: 769px) {\r\n  .example-card {\r\n    display: inline-block;\r\n    margin-left: 20px;\r\n  }\r\n}"
 
 /***/ }),
 
@@ -262,7 +463,7 @@ module.exports = "/* .body{\r\n  background-color: ;\r\n} */\r\n\r\n.example-car
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"body\">\n<form action=\"\">\n    <mat-radio-group class=\"example-radio-group\" [(ngModel)]=\"filterType\" name=\"filter\" #filter=\"ngModel\">\n        <mat-radio-button class=\"example-radio-button\" *ngFor=\"let filter of filterTypes\"  [value]=\"filter\">\n          {{filter}}\n        </mat-radio-button>\n      </mat-radio-group>\n<input type=\"text\" [(ngModel)]=\"searchTerm\" class=\"form-control search-bar\" name=\"searchTerm\" placeholder=\"Search...\">\n\n</form>\n<div *ngIf=\"filterType == 'Name'\">\n    <mat-card  class=\"example-card\" *ngFor=\"let event of events | filtername:searchTerm ; let i = index\" (click)=\"openDialog(event._id)\">\n        <div class=\"overlay\">\n              <div class=\"text\">More details</div>\n            </div>\n        \n        <mat-card-header>\n          <img  [src]=\"event.host.profilePic\" mat-card-avatar class=\"example-header-image\">\n          <mat-card-title>event name:{{event.name}}</mat-card-title>\n          <mat-card-subtitle>created by:{{event.host.firstname}} {{event.host.lastname}}</mat-card-subtitle>\n          <mat-card-subtitle> Date:{{month[event.date.month]}}/{{event.date.day}}/{{event.date.year}}</mat-card-subtitle>\n          \n          <mat-card-subtitle>Amount Attending:{{event.attending.length}}</mat-card-subtitle>\n          <div>\n        </div>\n        </mat-card-header>\n        <img  mat-card-image [src]=\"event.image\"  height=\"142\" width=\"142\" >\n        <mat-card-content>\n            <h4>Location</h4>\n            {{event.location.locationName}}\n        </mat-card-content>\n        <mat-card-actions>\n      \n        </mat-card-actions>\n      </mat-card>\n</div>\n<div *ngIf=\"filterType == 'Location'\">\n    <mat-card  class=\"example-card\" *ngFor=\"let event of events | filterlocation:searchTerm ; let i = index\" (click)=\"openDialog(event._id)\">\n        <div class=\"overlay\">\n              <div class=\"text\">More details</div>\n            </div>\n        \n        <mat-card-header>\n          <img  [src]=\"event.host.profilePic\" mat-card-avatar class=\"example-header-image\">\n          <mat-card-title>event name:{{event.name}}</mat-card-title>\n          <mat-card-subtitle>created by:{{event.host.firstname}} {{event.host.lastname}}</mat-card-subtitle>\n          <mat-card-subtitle> Date:{{month[event.date.month]}}/{{event.date.day}}/{{event.date.year}}</mat-card-subtitle>\n          \n          <mat-card-subtitle>Amount Attending:{{event.attending.length}}</mat-card-subtitle>\n          <div>\n        </div>\n        </mat-card-header>\n        <img  mat-card-image [src]=\"event.image\"  height=\"142\" width=\"142\" >\n        <mat-card-content>\n            <h4>Location</h4>\n            {{event.location.locationName}}\n        </mat-card-content>\n        <mat-card-actions>\n      \n        </mat-card-actions>\n      </mat-card>\n</div>\n</div>\n\n\n"
+module.exports = "<form action=\"\">\n    <button *ngIf=\"host\" class=\"add-event\" mat-raised-button style=\"background-color:#39B7CD; color:white\" (click)=\"openCreateEventDialog()\"> Add Event</button>\n    <mat-radio-group class=\"example-radio-group\" [(ngModel)]=\"filterType\" name=\"filter\" #filter=\"ngModel\">\n        <mat-radio-button class=\"example-radio-button\" *ngFor=\"let filter of filterTypes\"  [value]=\"filter\">\n          {{filter}}\n        </mat-radio-button>\n      </mat-radio-group>\n<input type=\"text\" [(ngModel)]=\"searchTerm\" class=\"form-control search-bar\" name=\"searchTerm\" placeholder=\"Search...\">\n\n</form>\n<div *ngIf=\"filterType == 'Name'\">\n    <mat-card  class=\"example-card\" *ngFor=\"let event of events | filtername:searchTerm ; let i = index\" (click)=\"openEventDialog(event._id)\">\n        <div class=\"overlay\">\n              <div class=\"text\">More details</div>\n            </div>\n        \n        <mat-card-header>\n          <img  [src]=\"event.host.profilePic\" mat-card-avatar class=\"example-header-image\">\n          <mat-card-title>event name:{{event.name}}</mat-card-title>\n          <mat-card-subtitle>created by:{{event.host.firstname}} {{event.host.lastname}}</mat-card-subtitle>\n          <mat-card-subtitle> Date:{{month[event.date.month]}}/{{event.date.day}}/{{event.date.year}}</mat-card-subtitle>\n          \n          <mat-card-subtitle>Amount Attending:{{event.attending.length}}</mat-card-subtitle>\n          <div>\n        </div>\n        </mat-card-header>\n        <img  mat-card-image [src]=\"event.image\"  height=\"142\" width=\"142\" >\n        <mat-card-content>\n            <label>Location</label>\n            <p> {{event.location.state}} {{event.location.city}} {{event.location.country}} {{event.location.country}}</p>\n        </mat-card-content>\n        <mat-card-actions>\n      \n        </mat-card-actions>\n      </mat-card>\n</div>\n<div *ngIf=\"filterType == 'Location'\">\n    <mat-card  class=\"example-card\" *ngFor=\"let event of events | filterlocation:searchTerm ; let i = index\" (click)=\"openEventDialog(event._id)\">\n        <div class=\"overlay\">\n              <div class=\"text\">More details</div>\n            </div>\n        \n        <mat-card-header>\n          <img  [src]=\"event.host.profilePic\" mat-card-avatar class=\"example-header-image\">\n          <mat-card-title>event name:{{event.name}}</mat-card-title>\n          <mat-card-subtitle>created by:{{event.host.firstname}} {{event.host.lastname}}</mat-card-subtitle>\n          <mat-card-subtitle> Date:{{month[event.date.month]}}/{{event.date.day}}/{{event.date.year}}</mat-card-subtitle>\n          \n          <mat-card-subtitle>Amount Attending:{{event.attending.length}}</mat-card-subtitle>\n          <div>\n        </div>\n        </mat-card-header>\n        <img  mat-card-image [src]=\"event.image\"  height=\"142\" width=\"142\" >\n        <mat-card-content>\n            <h4>Location</h4>\n            {{event.location.locationName}}\n        </mat-card-content>\n        <mat-card-actions>\n      \n        </mat-card-actions>\n      </mat-card>\n</div>\n\n\n"
 
 /***/ }),
 
@@ -281,6 +482,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_events_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/events.service */ "./src/app/services/events.service.ts");
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
 /* harmony import */ var _single_event_single_event_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./single-event/single-event.component */ "./src/app/components/events/single-event/single-event.component.ts");
+/* harmony import */ var _create_event_create_event_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../create-event/create-event.component */ "./src/app/components/create-event/create-event.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -295,10 +497,12 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var EventsComponent = /** @class */ (function () {
-    function EventsComponent(eventsService, dialog) {
+    function EventsComponent(eventsService, dialog, dialog2) {
         this.eventsService = eventsService;
         this.dialog = dialog;
+        this.dialog2 = dialog2;
         this.host = JSON.parse(localStorage.getItem('user'));
         this.imageIndex = null;
         this.filterType = 'Name';
@@ -306,7 +510,23 @@ var EventsComponent = /** @class */ (function () {
             "August", "September", "October", "November", "December"];
         this.filterTypes = ["Location", 'Name'];
     }
-    EventsComponent.prototype.openDialog = function (id) {
+    EventsComponent.prototype.openCreateEventDialog = function () {
+        var _this = this;
+        var dialog2 = this.dialog2.open(_create_event_create_event_component__WEBPACK_IMPORTED_MODULE_5__["CreateEventComponent"], {
+            data: {}
+        });
+        dialog2.afterClosed()
+            .subscribe(function (res) {
+            if (res == undefined) {
+                console.log("shoulding add");
+            }
+            else {
+                console.log("the res " + res);
+                _this.events.push(res);
+            }
+        });
+    };
+    EventsComponent.prototype.openEventDialog = function (id) {
         var _this = this;
         var index = null;
         for (var i = 0; i < this.events.length; i++) {
@@ -404,7 +624,7 @@ var EventsComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./events.component.html */ "./src/app/components/events/events.component.html"),
             styles: [__webpack_require__(/*! ./events.component.css */ "./src/app/components/events/events.component.css")],
         }),
-        __metadata("design:paramtypes", [_services_events_service__WEBPACK_IMPORTED_MODULE_2__["EventsService"], _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatDialog"]])
+        __metadata("design:paramtypes", [_services_events_service__WEBPACK_IMPORTED_MODULE_2__["EventsService"], _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatDialog"], _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatDialog"]])
     ], EventsComponent);
     return EventsComponent;
 }());
@@ -558,7 +778,7 @@ module.exports = ".example-card {\r\n    max-width: 300px;\r\n    margin: 20px;\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n<div mat-dialog-content >\n  <mat-card-content>\n      <div mat-dialog-title *ngIf=\"loggedIn\">\n          <button *ngIf=\"(event.host._id == user.id || event.host.id == user.id)  && !editMode && !editImageMode\" mat-raised-button color=\"warn\" (click)=\"onDeleteEvent()\">delete</button>\n          <button *ngIf=\"(event.host._id == user.id || event.host.id == user.id) && !editMode && !editImageMode\" mat-raised-button color=\"primary\" (click)=\"onEditEvent()\">Edit Event</button>\n          <button *ngIf=\"(event.host._id == user.id || event.host.id == user.id) && !editMode && !editImageMode\" mat-raised-button color=\"accent\" (click)=\"fileInput.click()\">Change Image</button>\n          <button  *ngIf=\"editImageMode && !editMode\" mat-raised-button color=\"primary\" (click)=\"uploadPhoto()\">save</button>\n          <button *ngIf=\"editImageMode && !editMode\"  mat-raised-button color=\"warn\" (click)=\"cancel()\">Cancel</button>\n          <button *ngIf=\"editMode && !editImageMode\" mat-raised-button color=\"primary\" (click)=\"onCancelEventChanges()\">Cancel changes</button>\n          <button *ngIf=\"editMode && !editImageMode\" type=\"submit\" mat-raised-button color=\"accent\" (click)=\"onConfirmEventChanges()\">confirm changes</button>\n          </div>\n          \n    <form action=\"\"  #f=\"ngForm\"  *ngIf=\"editMode && loggedIn\">\n      <div class=\"form-group\" >\n        <label>Edit name</label>\n        <input  type=\"text\" [ngModel]=\"event.name\"  name=\"eventname\" class=\"form-control\" required >\n        <!-- <span *ngIf=\"!eventname.valid && eventname.touched\">please enter a name</span> -->\n      </div>\n      \n      <div class=\"form-group\" >\n          <div class=\"form-group\" >\n              <label>Edit details</label>\n              <textarea [ngModel]=\"event.details\" rows=\"4\" cols=\"50\"  #details=ngModel name=\"details\" class=\"form-control\" required  ></textarea>\n            </div>\n        <label>Edit date</label>\n          <input [ngModel]=\"data.eventDate\"  #date=ngModel name=\"date\" class=\"form-control\" required matInput [matDatepicker]=\"picker\" placeholder='Date:{{month[data.eventDate.month]}}/{{data.eventDate.day}}/{{data.eventDate.year}}'>\n          <mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>\n          <mat-datepicker #picker></mat-datepicker>\n      </div>\n      \n      </form>    \n  </mat-card-content>\n  <input  #fileInput style=\"display: none\" type=\"file\" (change)=\"onFileSelected($event)\">\n</div>\n\n\n<div mat-dialog-content>\n  <mat-card *ngIf=\"event\" class=\"example-card\">\n    <div  class=\"form-group\" enctype=\"multipart/form-data\">\n      \n\n     \n    </div>\n  <mat-card-header>\n    <img  [src]=\"event.host.profilePic\" mat-card-avatar class=\"example-header-image\">\n    <mat-card-subtitle>created by:{{event.host.firstname}} {{event.host.lastname}}</mat-card-subtitle>\n    <mat-card-subtitle>name of the event:{{event.name}}</mat-card-subtitle>\n\n    <mat-card-subtitle>Date:{{month[data.eventDate.month]}}/{{data.eventDate.day}}/{{data.eventDate.year}}</mat-card-subtitle>\n    \n    <mat-card-subtitle>Amount Attending:{{event.attending.length}}</mat-card-subtitle>\n    <div>\n   \n  </div>\n  </mat-card-header>\n  <img  mat-card-image [src]=\"event.image\"  height=\"142\" width=\"142\" >\n  <mat-card-content>\n    <h4>About</h4>\n    <p>\n        {{event.details}}\n    </p>\n\n    \n    <button *ngIf=\"!showAttending && event.attending.length > 0\" mat-button (click)=\"toggleAttending()\">{{event.attending.length}} People are coming</button>\n    <button *ngIf=\"showAttending && event.attending.length > 0\" mat-button (click)=\"toggleAttending()\">Hide whos coming</button>\n    <div *ngIf=\"showAttending\">\n        <hr>\n        <h1>Join these guys</h1>\n        <ngx-slick  class=\"carousel\" #slickModal=\"slick-modal\" [config]=\"slideConfig\">\n\n        \n        \n          <div class=\"polaroid\" ngxSlickItem *ngFor=\"let attending of event.attending\">\n              <img [src]=\"attending.profilePic\" alt=\"Norway\" style=\"width:100%\">\n              <div class=\"container\">\n                <h2>{{attending.firstname}} {{attending.lastname}}</h2>\n              </div>\n            </div>\n            </ngx-slick>\n    </div>\n\n\n    <h4>Where</h4>\n    <agm-map [latitude]=\"event.location.lat\" [longitude]=\"event.location.lng\" >\n       <agm-marker [latitude]=\"event.location.lat\" [longitude]=\"event.location.lng\"></agm-marker>\n    </agm-map>\n  </mat-card-content>\n  <mat-card-actions>\n    <div *ngIf=\"loggedIn\">\n    <button *ngIf=\"!joinedEvent\" mat-button (click)=\"onJoinEvent(i)\">Join</button>\n    <button *ngIf=\"joinedEvent\" mat-button (click)=\"onLeaveEvent(i)\">Leave</button>\n    <button *ngIf=\"!showComments\" mat-button (click)=\"toggleComments(i)\">Show Comments</button>\n    <button *ngIf=\"showComments\" mat-button (click)=\"toggleComments(i)\">Hide Comments</button>\n    <app-comments [eventId]=\"eventId\" *ngIf=\"showComments\"></app-comments>\n\n  </div>\n\n  </mat-card-actions>\n</mat-card>\n</div>\n"
+module.exports = "\n<div mat-dialog-content >\n  <mat-card-content>\n      <div mat-dialog-title *ngIf=\"loggedIn\">\n          <button *ngIf=\"(event.host._id == user.id || event.host.id == user.id)  && !editMode && !editImageMode\" mat-raised-button color=\"warn\" (click)=\"onDeleteEvent()\">delete</button>\n          <button *ngIf=\"(event.host._id == user.id || event.host.id == user.id) && !editMode && !editImageMode\" mat-raised-button color=\"primary\" (click)=\"onEditEvent()\">Edit Event</button>\n          <button *ngIf=\"(event.host._id == user.id || event.host.id == user.id) && !editMode && !editImageMode\" mat-raised-button color=\"accent\" (click)=\"fileInput.click()\">Change Image</button>\n          <button  *ngIf=\"editImageMode && !editMode\" mat-raised-button color=\"primary\" (click)=\"uploadPhoto()\">save</button>\n          <button *ngIf=\"editImageMode && !editMode\"  mat-raised-button color=\"warn\" (click)=\"cancel()\">Cancel</button>\n          <button *ngIf=\"editMode && !editImageMode\" mat-raised-button color=\"primary\" (click)=\"onCancelEventChanges()\">Cancel changes</button>\n          <button *ngIf=\"editMode && !editImageMode\" type=\"submit\" mat-raised-button color=\"accent\" (click)=\"onConfirmEventChanges()\">confirm changes</button>\n          </div>\n          \n    <form action=\"\"  #f=\"ngForm\"  *ngIf=\"editMode && loggedIn\">\n      <div class=\"form-group\" >\n        <label>Edit name</label>\n        <input  type=\"text\" [ngModel]=\"event.name\"  name=\"eventname\" class=\"form-control\" required >\n        <!-- <span *ngIf=\"!eventname.valid && eventname.touched\">please enter a name</span> -->\n      </div>\n      \n      <div class=\"form-group\" >\n          <div class=\"form-group\" >\n              <label>Edit details</label>\n              <textarea [ngModel]=\"event.details\" rows=\"4\" cols=\"50\"  #details=ngModel name=\"details\" class=\"form-control\" required  ></textarea>\n            </div>\n        <label>Edit date</label>\n          <input [ngModel]=\"data.eventDate\"  #date=ngModel name=\"date\" class=\"form-control\" required matInput [matDatepicker]=\"picker\" placeholder='Date:{{month[data.eventDate.month]}}/{{data.eventDate.day}}/{{data.eventDate.year}}'>\n          <mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>\n          <mat-datepicker #picker></mat-datepicker>\n      </div>\n      \n      </form>    \n  </mat-card-content>\n  <input  #fileInput style=\"display: none\" type=\"file\" (change)=\"onFileSelected($event)\">\n</div>\n\n\n<div mat-dialog-content>\n  <mat-card *ngIf=\"event\" class=\"example-card\">\n    <div  class=\"form-group\" enctype=\"multipart/form-data\">\n      \n\n     \n    </div>\n  <mat-card-header>\n    <img  [src]=\"event.host.profilePic\" mat-card-avatar class=\"example-header-image\">\n    <mat-card-subtitle>created by:{{event.host.firstname}} {{event.host.lastname}}</mat-card-subtitle>\n    <mat-card-subtitle>name of the event:{{event.name}}</mat-card-subtitle>\n\n    <mat-card-subtitle>Date:{{month[data.eventDate.month]}}/{{data.eventDate.day}}/{{data.eventDate.year}}</mat-card-subtitle>\n    \n    <mat-card-subtitle>Amount Attending:{{event.attending.length}}</mat-card-subtitle>\n    <div>\n   \n  </div>\n  </mat-card-header>\n  <img  mat-card-image [src]=\"event.image\"  height=\"142\" width=\"142\" >\n  <mat-card-content>\n    <h4>About</h4>\n    <p>\n        {{event.details}}\n    </p>\n\n    \n    <button *ngIf=\"!showAttending && event.attending.length > 0\" mat-button (click)=\"toggleAttending()\">{{event.attending.length}} People are coming</button>\n    <button *ngIf=\"showAttending && event.attending.length > 0\" mat-button (click)=\"toggleAttending()\">Hide whos coming</button>\n    <div *ngIf=\"showAttending\">\n        <hr>\n        <h1>Join these guys</h1>\n        <ngx-slick  class=\"carousel\" #slickModal=\"slick-modal\" [config]=\"slideConfig\">\n\n        \n        \n          <div class=\"polaroid\" ngxSlickItem *ngFor=\"let attending of event.attending\">\n              <img [src]=\"attending.profilePic\" alt=\"Norway\" style=\"width:100%\">\n              <div class=\"container\">\n                <h2>{{attending.firstname}} {{attending.lastname}}</h2>\n              </div>\n            </div>\n            </ngx-slick>\n    </div>\n\n\n    <h4>Where</h4>\n    {{event.location.formattedAddress}} \n    <agm-map [latitude]=\"event.location.lat\" [longitude]=\"event.location.lng\" >\n       <agm-marker [latitude]=\"event.location.lat\" [longitude]=\"event.location.lng\"></agm-marker>\n    </agm-map>\n  </mat-card-content>\n  <mat-card-actions>\n    <div *ngIf=\"loggedIn\">\n    <button *ngIf=\"!joinedEvent\" mat-button (click)=\"onJoinEvent(i)\">Join</button>\n    <button *ngIf=\"joinedEvent\" mat-button (click)=\"onLeaveEvent(i)\">Leave</button>\n    <button *ngIf=\"!showComments\" mat-button (click)=\"toggleComments(i)\">Show Comments</button>\n    <button *ngIf=\"showComments\" mat-button (click)=\"toggleComments(i)\">Hide Comments</button>\n    <app-comments [eventId]=\"eventId\" *ngIf=\"showComments\"></app-comments>\n\n  </div>\n\n  </mat-card-actions>\n</mat-card>\n</div>\n"
 
 /***/ }),
 
@@ -851,7 +1071,7 @@ var MainNavComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = ".username\r\n{\r\n  padding-bottom: 80px;\r\n}\r\n.welcome\r\n{\r\n  padding-top: 80px;\r\n}\r\n.example-container {\r\n  display: flex;\r\n  flex-direction: column;\r\n}\r\n.example-container > * {\r\n  width: 100%;\r\n}\r\n.overlayy {\r\n   border-radius: 2em / 5em;\r\n  position: absolute;\r\n  top: 0;\r\n  bottom: 0;\r\n  left: 0;\r\n  right: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  opacity: 0;\r\n  transition: .5s ease;\r\n  background-color:#000000;\r\n}\r\n.example-card:hover .overlayy {\r\n  opacity: 0.5;\r\n  cursor: pointer;\r\n}\r\n.textt {\r\n  color: white;\r\n  font-size: 20px;\r\n  position: absolute;\r\n  top: 50%;\r\n  left: 50%;\r\n  -webkit-transform: translate(-50%, -50%);\r\n          transform: translate(-50%, -50%);\r\n  -ms-transform: translate(-50%, -50%);\r\n  text-align: center;\r\n   opacity: 1;\r\n  \r\n}\r\n.example-card {\r\n  border-radius: 2em / 5em;\r\n    max-width: 350px;\r\n    margin: 20px;\r\n    display: inline-block;\r\n    background: #757f9a; /* fallback for old browsers */ /* Chrome 10-25, Safari 5.1-6 */\r\n    background: linear-gradient(to right, #757f9a, #d7dde8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */\r\n  }\r\n.example-header-image {\r\n    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');\r\n    background-size: cover;\r\n  }\r\n.profileSection\r\n  { \r\n    font-family: 'Courgette', cursive;\r\n    background: #efefbb;\r\n    background: linear-gradient(to right, #efefbb, #d4d3dd); \r\n  }\r\n.eventsSection\r\n  {\r\n    height: 100%;\r\n    background: #cc95c0; /* fallback for old browsers */ /* Chrome 10-25, Safari 5.1-6 */\r\n  background: linear-gradient(to right, #cc95c0, #dbd4b4, #7aa1d2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */\r\n  }\r\n.circle {\r\n    width: 142x;\r\n    height: 142x;\r\n    line-height: 142x;\r\n    border-radius: 50%; /* the magic */\r\n    -moz-border-radius: 50%;\r\n    -webkit-border-radius: 50%;\r\n    /* text-align: center; */\r\n    color: white;\r\n    /* font-size: 16px; */\r\n    /* text-transform: uppercase; */\r\n    font-weight: 700;\r\n    margin: 0 auto 40px;\r\n  }\r\n.container \r\n    {\r\n      position: relative;\r\n      height: 142px;\r\n      width: 142px;\r\n    }\r\n.profilePicture\r\n    { \r\n      position: relative;\r\n      height: 142px;\r\n      width: 142px;\r\n      \r\n    }\r\n.overlay {\r\n    position: absolute;\r\n    top: 0;\r\n    bottom: 0;\r\n    left: -20;\r\n    right: 20;\r\n    height: 100%;\r\n    width: 100%;\r\n    opacity: 0;\r\n    transition: .5s ease;\r\n    background-color:#000000;\r\n  }\r\n.container:hover .overlay {\r\n    opacity: 0.5;\r\n    cursor: pointer;\r\n  }\r\n.text {\r\n    color: white;\r\n    font-size: 15px;\r\n    position: absolute;\r\n    top: 50%;\r\n    left: 50%; \r\n    -webkit-transform: translate(-50%, -50%); \r\n            transform: translate(-50%, -50%);\r\n    -ms-transform: translate(-50%, -50%);\r\n    text-align: center;\r\n     opacity: 1;\r\n     font-family: 'Courgette', cursive;\r\n    \r\n  }\r\n@media screen and (max-width: 773px) {\r\n    .example-card\r\n    {\r\n      max-width: 250px;\r\n      max-height: 100px\r\n    }\r\n    \r\n}\r\n@media screen and (max-width: 600px) {\r\n  .example-card\r\n  {\r\n    max-width: 200px;\r\n    max-height: 100px\r\n  }\r\n}\r\n@media screen and (max-width: 355px) {\r\n  .example-card\r\n  {\r\n    max-width: 150px;\r\n    max-height: 150px\r\n  }\r\n}"
+module.exports = "\r\n.add-event\r\n{ \r\n  border-radius: 2em / 5em;\r\n  margin-top: 20px;\r\n  margin-bottom: 20px;\r\n  margin-left: 25%;\r\n  \r\n  width: 50%;\r\n  height: 10%;\r\n}\r\n\r\n\r\n.username\r\n{\r\n  padding-bottom: 80px;\r\n}\r\n\r\n\r\n.welcome\r\n{\r\n  padding-top: 80px;\r\n}\r\n\r\n\r\n.example-container {\r\n  display: flex;\r\n  flex-direction: column;\r\n}\r\n\r\n\r\n.example-container > * {\r\n  width: 100%;\r\n}\r\n\r\n\r\n.overlayy {\r\n   border-radius: 2em / 5em;\r\n  position: absolute;\r\n  top: 0;\r\n  bottom: 0;\r\n  left: 0;\r\n  right: 0;\r\n  height: 100%;\r\n  width: 100%;\r\n  opacity: 0;\r\n  transition: .5s ease;\r\n  background-color:#000000;\r\n}\r\n\r\n\r\n.example-card:hover .overlayy {\r\n  opacity: 0.5;\r\n  cursor: pointer;\r\n}\r\n\r\n\r\n.textt {\r\n  color: white;\r\n  font-size: 20px;\r\n  position: absolute;\r\n  top: 50%;\r\n  left: 50%;\r\n  -webkit-transform: translate(-50%, -50%);\r\n          transform: translate(-50%, -50%);\r\n  -ms-transform: translate(-50%, -50%);\r\n  text-align: center;\r\n   opacity: 1;\r\n  \r\n}\r\n\r\n\r\n.example-card {\r\n  border-radius: 2em / 5em;\r\n    max-width: 350px;\r\n    margin: 20px;\r\n    display: inline-block;\r\n    background: #757f9a; /* fallback for old browsers */ /* Chrome 10-25, Safari 5.1-6 */\r\n    background: linear-gradient(to right, #757f9a, #d7dde8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */\r\n  }\r\n\r\n\r\n.example-header-image {\r\n    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');\r\n    background-size: cover;\r\n  }\r\n\r\n\r\n.profileSection\r\n  { \r\n    font-family: 'Courgette', cursive;\r\n    background: #efefbb;\r\n    background: linear-gradient(to right, #efefbb, #d4d3dd); \r\n  }\r\n\r\n\r\n.eventsSection\r\n  {\r\n    height: 100%;\r\n    background: #cc95c0; /* fallback for old browsers */ /* Chrome 10-25, Safari 5.1-6 */\r\n  background: linear-gradient(to right, #cc95c0, #dbd4b4, #7aa1d2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */\r\n  }\r\n\r\n\r\n.circle {\r\n    width: 142x;\r\n    height: 142x;\r\n    line-height: 142x;\r\n    border-radius: 50%; /* the magic */\r\n    -moz-border-radius: 50%;\r\n    -webkit-border-radius: 50%;\r\n    /* text-align: center; */\r\n    color: white;\r\n    /* font-size: 16px; */\r\n    /* text-transform: uppercase; */\r\n    font-weight: 700;\r\n    margin: 0 auto 40px;\r\n  }\r\n\r\n\r\n.container \r\n    {\r\n      position: relative;\r\n      height: 142px;\r\n      width: 142px;\r\n    }\r\n\r\n\r\n.profilePicture\r\n    { \r\n      position: relative;\r\n      height: 142px;\r\n      width: 142px;\r\n      \r\n    }\r\n\r\n\r\n.overlay {\r\n    position: absolute;\r\n    top: 0;\r\n    bottom: 0;\r\n    left: -20;\r\n    right: 20;\r\n    height: 100%;\r\n    width: 100%;\r\n    opacity: 0;\r\n    transition: .5s ease;\r\n    background-color:#000000;\r\n  }\r\n\r\n\r\n.container:hover .overlay {\r\n    opacity: 0.5;\r\n    cursor: pointer;\r\n  }\r\n\r\n\r\n.text {\r\n    color: white;\r\n    font-size: 15px;\r\n    position: absolute;\r\n    top: 50%;\r\n    left: 50%; \r\n    -webkit-transform: translate(-50%, -50%); \r\n            transform: translate(-50%, -50%);\r\n    -ms-transform: translate(-50%, -50%);\r\n    text-align: center;\r\n     opacity: 1;\r\n     font-family: 'Courgette', cursive;\r\n    \r\n  }\r\n\r\n\r\n@media screen and (max-width: 773px) {\r\n    .example-card\r\n    {\r\n      max-width: 250px;\r\n      max-height: 100px\r\n    }\r\n    \r\n}\r\n\r\n\r\n@media screen and (max-width: 600px) {\r\n  .example-card\r\n  {\r\n    max-width: 200px;\r\n    max-height: 100px\r\n  }\r\n}\r\n\r\n\r\n@media screen and (max-width: 355px) {\r\n  .example-card\r\n  {\r\n    max-width: 150px;\r\n    max-height: 150px\r\n  }\r\n}"
 
 /***/ }),
 
@@ -862,7 +1082,7 @@ module.exports = ".username\r\n{\r\n  padding-bottom: 80px;\r\n}\r\n.welcome\r\n
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n<div *ngIf=\"user\" >\r\n    <mat-grid-list cols=\"4\" rowHeight=\"100px\" class=\"profileSection\">\r\n        <mat-grid-tile\r\n      colspan=\"1\"\r\n      [rowspan]=\"profilePicRows\"\r\n      style= \"border:0px solid black\">\r\n       \r\n          <div (click)=\"fileInput.click()\" class=\"container\">\r\n     <img class=\"profilePicture circle\" [src]=\"user.profilePic\" alt=\"\">\r\n     <div class=\"overlay circle\">\r\n        <p class=\"text circle\">Update profile picture</p>\r\n      </div>\r\n    </div>\r\n  </mat-grid-tile>\r\n\r\n\r\n\r\n        <mat-grid-tile colspan=\"3\" rowspan=\"1\" style= \"border:0px solid black\">\r\n      <h3 class=\"welcome\">Welcome </h3>\r\n    </mat-grid-tile>\r\n    <mat-grid-tile colspan=\"3\" rowspan=\"2\" style= \"border:0px solid black\">\r\n        <h3 class=\"username\">{{user.firstname}} {{user.lastname}}</h3>\r\n      </mat-grid-tile>\r\n     \r\n      <mat-grid-tile [colspan]=\"changePictureRows\" [rowspan]=\"changePictureRows\" style= \"border:0px solid black\">\r\n          <div class=\"form-group\" enctype=\"multipart/form-data\">\r\n            <input  #fileInput style=\"display: none\" type=\"file\" (change)=\"onFileSelected($event)\">\r\n            <button *ngIf=\"saveChange\" mat-raised-button color=\"primary\" type=\"button\" (click)=\"uploadPhoto()\">save</button>\r\n            <button *ngIf=\"saveChange\" mat-raised-button color=\"accent\" type=\"button\" (click)=\"cancel()\">Cancel</button>\r\n          </div>\r\n      <!-- </mat-grid-tile>\r\n\r\n      <mat-grid-tile colspan=\"1\" rowspan=\"1\" style= \"border:0.5px solid black\"> -->\r\n\r\n      </mat-grid-tile>\r\n</mat-grid-list>\r\n\r\n\r\n\r\n  <mat-grid-list  cols=\"4\" rowHeight=\"100px\" class=\"eventsSection\">\r\n  <mat-grid-tile colspan=\"2\" rowspan=\"3\" >\r\n<div>\r\n\r\n<mat-card class=\"example-card\" (click)=\"showCreatedEvents()\">\r\n\r\n<mat-card-header>\r\n    <div class=\"overlayy\">\r\n        <div *ngIf=\"!user.events.length\" class=\"textt\">You haven't created any events</div>\r\n        <div *ngIf=\"!showMycreatedEvents && user.events.length\"  class=\"textt\" >See all</div>\r\n        <div *ngIf=\"showMycreatedEvents\" class=\"textt\">hide</div>\r\n\r\n      </div>\r\n  <mat-card-title><h4>You created {{user.events.length}} events </h4></mat-card-title>\r\n</mat-card-header>\r\n\r\n</mat-card>\r\n\r\n</div>\r\n</mat-grid-tile>\r\n\r\n<mat-grid-tile colspan=\"2\" rowspan=\"3\">\r\n    <div>\r\n    \r\n    <mat-card class=\"example-card\" (click)=\"showAttendingEvents()\" >\r\n    \r\n    <mat-card-header>\r\n        <div class=\"overlayy\">\r\n            <div *ngIf=\"!user.attending.length\" class=\"textt\">you aren't attending any events</div>\r\n            <div *ngIf=\"!showMyattendingEvents && user.attending.length\" class=\"textt\">See all</div>\r\n            <div *ngIf=\"showMyattendingEvents\" class=\"textt\">hide</div>\r\n          </div>\r\n      <mat-card-title><h4>You are attending {{user.attending.length}} events </h4></mat-card-title>\r\n    </mat-card-header>\r\n  \r\n    </mat-card>\r\n    \r\n    </div>\r\n    </mat-grid-tile>\r\n\r\n</mat-grid-list>\r\n\r\n<app-users-created-events *ngIf=\"showMycreatedEvents\" (deletedEvents)=\"deleteEvent($event)\" (leaveEvents)=\"leaveEvent($event)\" (joinedEvents)=\"joinEvent($event)\"></app-users-created-events>\r\n<app-users-attending-events *ngIf=\"showMyattendingEvents\" (deletedEvents)=\"deleteEvent($event)\" (leaveEvents)=\"leaveEvent($event)\" (joinedEvents)=\"joinEvent($event)\"></app-users-attending-events>\r\n</div>\r\n\r\n<label for=\"\">Create an event</label>\r\n<form action=\"\" (submit)=\"convertAddress()\" #f=\"ngForm\">\r\n    <div class=\"form-group\" >\r\n      <label>Event name</label>\r\n      <input type=\"textarea\" ngModel #eventname=ngModel name=\"eventname\" class=\"form-control\" required >\r\n      <span *ngIf=\"!eventname.valid && eventname.touched\">please enter a name</span>\r\n    </div>\r\n    \r\n    <div class=\"form-group\" >\r\n        <div class=\"form-group\" >\r\n            <label>Details</label>\r\n            <textarea rows=\"4\" cols=\"50\" ngModel #details=ngModel name=\"details\" class=\"form-control\" required></textarea>\r\n          </div>\r\n          <div class=\"form-group\" >\r\n            <label>Location</label>\r\n            <input type=\"text\" placeholder=\"Search for Location\" autocorrect=\"off\" autocapitalize=\"off\" spellcheck=\"off\" class=\"form-control\" #search ngModel #location=ngModel name=\"location\" required>          \r\n        </div>\r\n      <label>date</label>\r\n      <input dateformat=\"dd-MMM-yyyy\" matInput [matDatepicker]=\"picker\" placeholder=\"Choose a date\" ngModel #date=ngModel name=\"date\" class=\"form-control\" required>\r\n      <mat-datepicker-toggle matSuffix [for]=\"picker\" ></mat-datepicker-toggle>\r\n      <mat-datepicker #picker touchUi=\"true\" ></mat-datepicker> \r\n\r\n     </div>\r\n    <input [disabled]=\"!f.valid || searchLocation == ''\" type=\"submit\" class=\"btn btn-primary\" value=\"add event\">\r\n    </form>\r\n\r\n"
+module.exports = "\r\n<div *ngIf=\"user\" >\r\n    \r\n    <mat-grid-list cols=\"4\" rowHeight=\"100px\" class=\"profileSection\">\r\n        <mat-grid-tile\r\n      colspan=\"1\"\r\n      [rowspan]=\"profilePicRows\"\r\n      style= \"border:0px solid black\">\r\n       \r\n          <div (click)=\"fileInput.click()\" class=\"container\">\r\n     <img class=\"profilePicture circle\" [src]=\"user.profilePic\" alt=\"\">\r\n     <div class=\"overlay circle\">\r\n        <p class=\"text circle\">Update profile picture</p>\r\n      </div>\r\n    </div>\r\n  </mat-grid-tile>\r\n\r\n\r\n\r\n        <mat-grid-tile colspan=\"3\" rowspan=\"1\" style= \"border:0px solid black\">\r\n      <h3 class=\"welcome\">Welcome </h3>\r\n    </mat-grid-tile>\r\n    <mat-grid-tile colspan=\"3\" rowspan=\"2\" style= \"border:0px solid black\">\r\n        <h3 class=\"username\">{{user.firstname}} {{user.lastname}}</h3>\r\n      </mat-grid-tile>\r\n     \r\n      <mat-grid-tile [colspan]=\"changePictureRows\" [rowspan]=\"changePictureRows\" style= \"border:0px solid black\">\r\n          <div class=\"form-group\" enctype=\"multipart/form-data\">\r\n            <input  #fileInput style=\"display: none\" type=\"file\" (change)=\"onFileSelected($event)\">\r\n            <button *ngIf=\"saveChange\" mat-raised-button color=\"primary\" type=\"button\" (click)=\"uploadPhoto()\">save</button>\r\n            <button *ngIf=\"saveChange\" mat-raised-button color=\"accent\" type=\"button\" (click)=\"cancel()\">Cancel</button>\r\n          </div>\r\n      <!-- </mat-grid-tile>\r\n\r\n      <mat-grid-tile colspan=\"1\" rowspan=\"1\" style= \"border:0.5px solid black\"> -->\r\n\r\n      </mat-grid-tile>\r\n</mat-grid-list>\r\n\r\n\r\n\r\n  <mat-grid-list  cols=\"4\" rowHeight=\"100px\" class=\"eventsSection\">\r\n  <mat-grid-tile colspan=\"2\" rowspan=\"3\" >\r\n<div>\r\n\r\n<mat-card class=\"example-card\" (click)=\"showCreatedEvents()\">\r\n\r\n<mat-card-header>\r\n    <div class=\"overlayy\">\r\n        <div *ngIf=\"!user.events.length\" class=\"textt\">You haven't created any events</div>\r\n        <div *ngIf=\"!showMycreatedEvents && user.events.length\"  class=\"textt\" >See all</div>\r\n        <div *ngIf=\"showMycreatedEvents\" class=\"textt\">hide</div>\r\n\r\n      </div>\r\n  <mat-card-title><h4>You created {{user.events.length}} events </h4></mat-card-title>\r\n</mat-card-header>\r\n\r\n</mat-card>\r\n\r\n</div>\r\n</mat-grid-tile>\r\n\r\n<mat-grid-tile colspan=\"2\" rowspan=\"3\">\r\n    <div>\r\n    \r\n    <mat-card class=\"example-card\" (click)=\"showAttendingEvents()\" >\r\n    \r\n    <mat-card-header>\r\n        <div class=\"overlayy\">\r\n            <div *ngIf=\"!user.attending.length\" class=\"textt\">you aren't attending any events</div>\r\n            <div *ngIf=\"!showMyattendingEvents && user.attending.length\" class=\"textt\">See all</div>\r\n            <div *ngIf=\"showMyattendingEvents\" class=\"textt\">hide</div>\r\n          </div>\r\n      <mat-card-title><h4>You are attending {{user.attending.length}} events </h4></mat-card-title>\r\n    </mat-card-header>\r\n  \r\n    </mat-card>\r\n    \r\n    </div>\r\n    </mat-grid-tile>\r\n\r\n</mat-grid-list>\r\n\r\n<app-users-created-events *ngIf=\"showMycreatedEvents\" (deletedEvents)=\"deleteEvent($event)\" (leaveEvents)=\"leaveEvent($event)\" (joinedEvents)=\"joinEvent($event)\"></app-users-created-events>\r\n<app-users-attending-events *ngIf=\"showMyattendingEvents\" (deletedEvents)=\"deleteEvent($event)\" (leaveEvents)=\"leaveEvent($event)\" (joinedEvents)=\"joinEvent($event)\"></app-users-attending-events>\r\n</div>\r\n\r\n\r\n<button class=\"add-event\" mat-raised-button style=\"background-color:#39B7CD; color:white\" (click)=\"openCreateEventDialog()\"> Add Event</button>\r\n\r\n\r\n\r\n\r\n    \r\n\r\n"
 
 /***/ }),
 
@@ -878,9 +1098,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProfileComponent", function() { return ProfileComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _services_auth_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/auth.service */ "./src/app/services/auth.service.ts");
-/* harmony import */ var _services_events_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../services/events.service */ "./src/app/services/events.service.ts");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _agm_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @agm/core */ "./node_modules/@agm/core/index.js");
+/* harmony import */ var _create_event_create_event_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../create-event/create-event.component */ "./src/app/components/create-event/create-event.component.ts");
+/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -894,33 +1113,32 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-
 var ProfileComponent = /** @class */ (function () {
     // hosting:any
     // attending:any[]
-    function ProfileComponent(authService, eventsService, mapsAPILoader, ngZone) {
+    function ProfileComponent(authService, dialog) {
         this.authService = authService;
-        this.eventsService = eventsService;
-        this.mapsAPILoader = mapsAPILoader;
-        this.ngZone = ngZone;
+        this.dialog = dialog;
         this.host = JSON.parse(localStorage.getItem('user'));
         this.eventImageIndex = null;
         this.profilePicRows = 3;
         this.changePictureRows = 0;
     }
-    ProfileComponent.prototype.convertAddress = function () {
+    ProfileComponent.prototype.openCreateEventDialog = function () {
         var _this = this;
-        var geocoder;
-        var address = this.searchElement.nativeElement.value;
-        this.locationName = address;
-        geocoder = new google.maps.Geocoder();
-        geocoder.geocode({ 'address': address }, function (results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                _this.lat = results[0].geometry.location.lat();
-                _this.lng = results[0].geometry.location.lng();
-                _this.onAddEvent();
+        this.showMycreatedEvents = false;
+        this.showMyattendingEvents = false;
+        var dialog = this.dialog.open(_create_event_create_event_component__WEBPACK_IMPORTED_MODULE_2__["CreateEventComponent"], {
+            data: {}
+        });
+        dialog.afterClosed()
+            .subscribe(function (res) {
+            if (res == undefined) {
+                console.log("shoulding add");
             }
             else {
+                console.log("the res " + res);
+                _this.user.events.push(res._id);
             }
         });
     };
@@ -961,41 +1179,6 @@ var ProfileComponent = /** @class */ (function () {
             this.showMycreatedEvents = false;
         }
     };
-    ProfileComponent.prototype.onAddEvent = function () {
-        var _this = this;
-        // this.convertAddress()
-        console.log(" host " + this.user);
-        var newEvent = {
-            name: this.eventform.value.eventname,
-            details: this.eventform.value.details,
-            date: this.eventform.value.date,
-            host: this.host.id,
-            image: 'uploads/default.png',
-            location: {
-                lat: this.lat,
-                lng: this.lng,
-                locationName: this.locationName
-            }
-        };
-        //  console.log(this.searchElement.nativeElement)
-        this.eventsService.addEvent(newEvent).subscribe(function (res) {
-            var date = new Date(res.date);
-            var year = date.getFullYear();
-            var month = date.getMonth();
-            var day = date.getDate();
-            var time = {
-                year: year,
-                month: month,
-                day: day
-            };
-            res.date = time;
-            console.log(res);
-            console.log(_this.user.events.length);
-            _this.user.events.push(res._id);
-            console.log(_this.user.events.length);
-            _this.eventform.reset();
-        });
-    };
     ProfileComponent.prototype.onFileSelected = function (event) {
         var _this = this;
         this.profilePicRows = 2;
@@ -1010,27 +1193,6 @@ var ProfileComponent = /** @class */ (function () {
         }
         this.show = true;
         this.saveChange = true;
-    };
-    ProfileComponent.prototype.onEventImageSelcted = function (event, i) {
-        var _this = this;
-        if (this.imageIndex != null) {
-            this.user.attending[this.imageIndex].image = this.eventTempPic;
-        }
-        this.eventTempPic = this.user.attending[i].image;
-        this.picture = event.target.files[0];
-        if (event.target.files && event.target.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function (event) {
-                _this.user.attending[i].image = event.target.result;
-            };
-            reader.readAsDataURL(event.target.files[0]);
-        }
-        this.imageIndex = i;
-    };
-    ProfileComponent.prototype.cancelEventImageChange = function (i) {
-        this.user.attending[i].image = this.eventTempPic;
-        this.imageIndex = null;
-        //this.show = false
     };
     ProfileComponent.prototype.uploadPhoto = function () {
         var _this = this;
@@ -1048,14 +1210,6 @@ var ProfileComponent = /** @class */ (function () {
         this.changePictureRows = 0;
         this.saveChange = false;
     };
-    //  onDeleteEvent(i)
-    //  { 
-    //    event = this.user.events[i]
-    //    console.log(event)
-    //    this.user.events.splice(i,1)
-    //    this.eventService.deleteEvent(event).subscribe((res: any) => {
-    //    console.log("the res "+ res)});
-    //  }
     ProfileComponent.prototype.cancel = function () {
         this.user.profilePic = this.tempPic;
         this.saveChange = false;
@@ -1065,18 +1219,6 @@ var ProfileComponent = /** @class */ (function () {
     };
     ProfileComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.mapsAPILoader.load().then(function () {
-            var autocomplete = new google.maps.places.Autocomplete(_this.searchElement.nativeElement, { types: ["address"] });
-            autocomplete.addListener("place_changed", function () {
-                _this.ngZone.run(function () {
-                    var place = autocomplete.getPlace();
-                    if (place.geometry === undefined || place.geometry === null) {
-                        return;
-                    }
-                });
-            });
-        });
-        console.log("refreshed");
         this.authService.getProfile().subscribe(function (profile) {
             _this.user = profile;
             _this.tempPic = _this.user.profilePic;
@@ -1088,22 +1230,13 @@ var ProfileComponent = /** @class */ (function () {
             _this.show = false;
         });
     };
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('f'),
-        __metadata("design:type", _angular_forms__WEBPACK_IMPORTED_MODULE_3__["NgForm"])
-    ], ProfileComponent.prototype, "eventform", void 0);
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('search', { read: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"] }),
-        __metadata("design:type", Object)
-    ], ProfileComponent.prototype, "searchElement", void 0);
     ProfileComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-profile',
             template: __webpack_require__(/*! ./profile.component.html */ "./src/app/components/profile/profile.component.html"),
             styles: [__webpack_require__(/*! ./profile.component.css */ "./src/app/components/profile/profile.component.css")]
         }),
-        __metadata("design:paramtypes", [_services_auth_service__WEBPACK_IMPORTED_MODULE_1__["AuthService"], _services_events_service__WEBPACK_IMPORTED_MODULE_2__["EventsService"],
-            _agm_core__WEBPACK_IMPORTED_MODULE_4__["MapsAPILoader"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgZone"]])
+        __metadata("design:paramtypes", [_services_auth_service__WEBPACK_IMPORTED_MODULE_1__["AuthService"], _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatDialog"]])
     ], ProfileComponent);
     return ProfileComponent;
 }());
@@ -1130,7 +1263,7 @@ module.exports = ".example-card {\r\n    max-width: 300px;\r\n    margin: 20px;\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ngx-slick  class=\"carousel\" #slickModal=\"slick-modal\" [config]=\"slideConfig\">\n<mat-card ngxSlickItem class=\"example-card\" *ngFor=\"let event of events; let i = index\">\n  \n    <mat-card-header>\n\n      <mat-card-title>event name:{{event.name}}</mat-card-title>\n      <mat-card-subtitle> Date:{{month[event.date.month]}}/{{event.date.day}}/{{event.date.year}}</mat-card-subtitle>      \n      <mat-card-subtitle>Amount Attending:{{event.attending.length}}</mat-card-subtitle>\n      <div>\n    </div>\n    </mat-card-header>\n    <img  mat-card-image [src]=\"event.image\"  height=\"142\" width=\"142\" >\n    <label for=\"\">About</label>\n    <h3>{{event.location.locationName}}</h3>\n\n    <mat-card-content>\n    </mat-card-content>\n    <mat-card-actions>\n        <button class=\"details\" mat-raised-button color=\"primary\" (click)=\"openDialog(i)\">More details</button>\n\n    </mat-card-actions>\n  \n  </mat-card>\n</ngx-slick>\n\n  "
+module.exports = "<ngx-slick  class=\"carousel\" #slickModal=\"slick-modal\" [config]=\"slideConfig\">\n<mat-card ngxSlickItem class=\"example-card\" *ngFor=\"let event of events; let i = index\">\n  \n    <mat-card-header>\n\n      <mat-card-title>event name:{{event.name}}</mat-card-title>\n      <mat-card-subtitle> Date:{{month[event.date.month]}}/{{event.date.day}}/{{event.date.year}}</mat-card-subtitle>      \n      <mat-card-subtitle>Amount Attending:{{event.attending.length}}</mat-card-subtitle>\n      <div>\n    </div>\n    </mat-card-header>\n    <img  mat-card-image [src]=\"event.image\"  height=\"142\" width=\"142\" >\n    <label for=\"\">About</label>\n    <p>{{event.location.state}} {{event.location.city}} {{event.location.country}}</p>\n\n    <mat-card-content>\n    </mat-card-content>\n    <mat-card-actions>\n        <button class=\"details\" mat-raised-button color=\"primary\" (click)=\"openDialog(i)\">More details</button>\n\n    </mat-card-actions>\n  \n  </mat-card>\n</ngx-slick>\n\n  "
 
 /***/ }),
 
@@ -1289,7 +1422,7 @@ module.exports = ".example-card {\r\n    max-width: 300px;\r\n    margin: 20px;\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<ngx-slick  class=\"carousel\" #slickModal=\"slick-modal\" [config]=\"slideConfig\">\n<mat-card ngxSlickItem class=\"example-card\" *ngFor=\"let event of events; let i = index\">\n  \n      <mat-card-header>\n        \n        <mat-card-title>event name:{{event.name}}</mat-card-title>\n        <mat-card-subtitle> Date:{{month[event.date.month]}}/{{event.date.day}}/{{event.date.year}}</mat-card-subtitle>      \n        <mat-card-subtitle>Amount Attending:{{event.attending.length}}</mat-card-subtitle>\n        <div>\n      </div>\n      </mat-card-header>\n      <img  mat-card-image [src]=\"event.image\"  height=\"142\" width=\"142\" >\n      <label for=\"\">Where</label>\n      <h3>{{event.location.locationName}}</h3>\n      <mat-card-content>\n      </mat-card-content>\n      <mat-card-actions>\n        <button class=\"details\" mat-raised-button color=\"primary\" (click)=\"openDialog(i)\">More details</button>\n      </mat-card-actions>\n    </mat-card>\n  </ngx-slick>\n"
+module.exports = "<ngx-slick  class=\"carousel\" #slickModal=\"slick-modal\" [config]=\"slideConfig\">\n<mat-card ngxSlickItem class=\"example-card\" *ngFor=\"let event of events; let i = index\">\n  \n      <mat-card-header>\n        \n        <mat-card-title>event name:{{event.name}}</mat-card-title>\n        <mat-card-subtitle> Date:{{month[event.date.month]}}/{{event.date.day}}/{{event.date.year}}</mat-card-subtitle>      \n        <mat-card-subtitle>Amount Attending:{{event.attending.length}}</mat-card-subtitle>\n        <div>\n      </div>\n      </mat-card-header>\n      <img  mat-card-image [src]=\"event.image\"  height=\"142\" width=\"142\" >\n      <label for=\"\">Where</label>\n      <p>{{event.location.state}} {{event.location.city}} {{event.location.country}}</p>\n      <mat-card-content>\n      </mat-card-content>\n      <mat-card-actions>\n        <button class=\"details\" mat-raised-button color=\"primary\" (click)=\"openDialog(i)\">More details</button>\n      </mat-card-actions>\n    </mat-card>\n  </ngx-slick>\n"
 
 /***/ }),
 
@@ -1391,7 +1524,7 @@ var UsersCreatedEventsComponent = /** @class */ (function () {
     UsersCreatedEventsComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.eventsService.getUsersEvents(this.user.id).subscribe(function (res) {
-            console.log("the whole res " + res);
+            console.log("the whole res " + res.events);
             _this.events = res.events;
             console.log(_this.events);
             for (var i = 0; i < _this.events.length; i++) {

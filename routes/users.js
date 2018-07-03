@@ -179,7 +179,7 @@ router.post('/authenticate', (req,res,next)=>{
 
 router.get('/getattendingevents',(req,res)=>{
     console.log(">"+req.headers.authorization)
-    User.findById(req.headers.authorization).populate('attending', 'location.locationName name details date image attending host').exec((err,events)=>{
+    User.findById(req.headers.authorization).populate('attending', 'location name details date image attending host').exec((err,events)=>{
         console.log(">:"+events+":<")
         res.json(events)
     })
@@ -189,7 +189,7 @@ router.get('/getattendingevents',(req,res)=>{
 
 router.get('/getcreatedevents',(req,res)=>{
     console.log(">"+req.headers.authorization)
-    User.findById(req.headers.authorization).populate('events', 'location.locationName name details date image attending').exec((err,events)=>{
+    User.findById(req.headers.authorization).populate('events', 'location name details date image attending').exec((err,events)=>{
         console.log(">"+events+"<")
         res.json(events)
     })
