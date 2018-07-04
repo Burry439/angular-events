@@ -315,20 +315,6 @@ var CreateEventComponent = /** @class */ (function () {
         this.host = JSON.parse(localStorage.getItem('user'));
         this.closeDialog = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
     }
-    //   convertAddress() 
-    //   { 
-    //      this.http.get('https://maps.googleapis.com/maps/api/geocode/json?address=' + 
-    //      this.searchElement.nativeElement.value + '&key=AIzaSyB9apYkFiLPc7Q0onb1fFfemAB8cLVVoiI')
-    //      .subscribe(res =>{
-    //       console.log(res.json().results[0].address_components[4] + "   " + this.searchElement.nativeElement.value);
-    //      this.lat = res.json().results[0].geometry.location.lat  
-    //      this.lng = res.json().results[0].geometry.location.lng
-    //      this.state = res.json().results[0].address_components[3].long_name
-    //      this.country = res.json().results[0].address_components[4].long_name
-    //      this.formattedAddress = res.json().results[0].formatted_address
-    //      this.onAddEvent()
-    //     })
-    //  }
     CreateEventComponent.prototype.convertAddress = function () {
         var _this = this;
         this.http.get('https://maps.googleapis.com/maps/api/geocode/json?address=' +
@@ -352,23 +338,6 @@ var CreateEventComponent = /** @class */ (function () {
             _this.onAddEvent();
         });
     };
-    // convertAddress() { 
-    //   var geocoder; 
-    //   var address = this.searchElement.nativeElement.value; 
-    //   this.locationName = address
-    //   geocoder = new google.maps.Geocoder();
-    //   geocoder.geocode( { 'address': address}, 
-    //   (results, status)=> 
-    //   { 
-    //     if (status == google.maps.GeocoderStatus.OK) 
-    //     { 
-    //       console.log("hello")
-    //       this.addressSet = true
-    //      this.lat = results[0].geometry.location.lat()
-    //      this.lng = results[0].geometry.location.lng()  
-    //     } 
-    //     else { 
-    //   } }); } 
     CreateEventComponent.prototype.onAddEvent = function () {
         var _this = this;
         var newEvent = {
@@ -575,9 +544,11 @@ var EventsComponent = /** @class */ (function () {
                 if (res.date) {
                     _this.events[index].name = res.name || _this.events[index].name;
                     _this.events[index].details = res.details;
+                    _this.events[index].location = res.location;
                     _this.events[index].date = res.date;
                 }
                 else {
+                    _this.events[index].location = res.location;
                     _this.events[index].name = res.name;
                     _this.events[index].details = res.details;
                 }
@@ -778,7 +749,7 @@ module.exports = ".example-card {\r\n    max-width: 300px;\r\n    margin: 20px;\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n<div mat-dialog-content >\n  <mat-card-content>\n      <div mat-dialog-title *ngIf=\"loggedIn\">\n          <button *ngIf=\"(event.host._id == user.id || event.host.id == user.id)  && !editMode && !editImageMode\" mat-raised-button color=\"warn\" (click)=\"onDeleteEvent()\">delete</button>\n          <button *ngIf=\"(event.host._id == user.id || event.host.id == user.id) && !editMode && !editImageMode\" mat-raised-button color=\"primary\" (click)=\"onEditEvent()\">Edit Event</button>\n          <button *ngIf=\"(event.host._id == user.id || event.host.id == user.id) && !editMode && !editImageMode\" mat-raised-button color=\"accent\" (click)=\"fileInput.click()\">Change Image</button>\n          <button  *ngIf=\"editImageMode && !editMode\" mat-raised-button color=\"primary\" (click)=\"uploadPhoto()\">save</button>\n          <button *ngIf=\"editImageMode && !editMode\"  mat-raised-button color=\"warn\" (click)=\"cancel()\">Cancel</button>\n          <button *ngIf=\"editMode && !editImageMode\" mat-raised-button color=\"primary\" (click)=\"onCancelEventChanges()\">Cancel changes</button>\n          <button *ngIf=\"editMode && !editImageMode\" type=\"submit\" mat-raised-button color=\"accent\" (click)=\"onConfirmEventChanges()\">confirm changes</button>\n          </div>\n          \n    <form action=\"\"  #f=\"ngForm\"  *ngIf=\"editMode && loggedIn\">\n      <div class=\"form-group\" >\n        <label>Edit name</label>\n        <input  type=\"text\" [ngModel]=\"event.name\"  name=\"eventname\" class=\"form-control\" required >\n        <!-- <span *ngIf=\"!eventname.valid && eventname.touched\">please enter a name</span> -->\n      </div>\n      \n      <div class=\"form-group\" >\n          <div class=\"form-group\" >\n              <label>Edit details</label>\n              <textarea [ngModel]=\"event.details\" rows=\"4\" cols=\"50\"  #details=ngModel name=\"details\" class=\"form-control\" required  ></textarea>\n            </div>\n        <label>Edit date</label>\n          <input [ngModel]=\"data.eventDate\"  #date=ngModel name=\"date\" class=\"form-control\" required matInput [matDatepicker]=\"picker\" placeholder='Date:{{month[data.eventDate.month]}}/{{data.eventDate.day}}/{{data.eventDate.year}}'>\n          <mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>\n          <mat-datepicker #picker></mat-datepicker>\n      </div>\n      \n      </form>    \n  </mat-card-content>\n  <input  #fileInput style=\"display: none\" type=\"file\" (change)=\"onFileSelected($event)\">\n</div>\n\n\n<div mat-dialog-content>\n  <mat-card *ngIf=\"event\" class=\"example-card\">\n    <div  class=\"form-group\" enctype=\"multipart/form-data\">\n      \n\n     \n    </div>\n  <mat-card-header>\n    <img  [src]=\"event.host.profilePic\" mat-card-avatar class=\"example-header-image\">\n    <mat-card-subtitle>created by:{{event.host.firstname}} {{event.host.lastname}}</mat-card-subtitle>\n    <mat-card-subtitle>name of the event:{{event.name}}</mat-card-subtitle>\n\n    <mat-card-subtitle>Date:{{month[data.eventDate.month]}}/{{data.eventDate.day}}/{{data.eventDate.year}}</mat-card-subtitle>\n    \n    <mat-card-subtitle>Amount Attending:{{event.attending.length}}</mat-card-subtitle>\n    <div>\n   \n  </div>\n  </mat-card-header>\n  <img  mat-card-image [src]=\"event.image\"  height=\"142\" width=\"142\" >\n  <mat-card-content>\n    <h4>About</h4>\n    <p>\n        {{event.details}}\n    </p>\n\n    \n    <button *ngIf=\"!showAttending && event.attending.length > 0\" mat-button (click)=\"toggleAttending()\">{{event.attending.length}} People are coming</button>\n    <button *ngIf=\"showAttending && event.attending.length > 0\" mat-button (click)=\"toggleAttending()\">Hide whos coming</button>\n    <div *ngIf=\"showAttending\">\n        <hr>\n        <h1>Join these guys</h1>\n        <ngx-slick  class=\"carousel\" #slickModal=\"slick-modal\" [config]=\"slideConfig\">\n\n        \n        \n          <div class=\"polaroid\" ngxSlickItem *ngFor=\"let attending of event.attending\">\n              <img [src]=\"attending.profilePic\" alt=\"Norway\" style=\"width:100%\">\n              <div class=\"container\">\n                <h2>{{attending.firstname}} {{attending.lastname}}</h2>\n              </div>\n            </div>\n            </ngx-slick>\n    </div>\n\n\n    <h4>Where</h4>\n    {{event.location.formattedAddress}} \n    <agm-map [latitude]=\"event.location.lat\" [longitude]=\"event.location.lng\" >\n       <agm-marker [latitude]=\"event.location.lat\" [longitude]=\"event.location.lng\"></agm-marker>\n    </agm-map>\n  </mat-card-content>\n  <mat-card-actions>\n    <div *ngIf=\"loggedIn\">\n    <button *ngIf=\"!joinedEvent\" mat-button (click)=\"onJoinEvent(i)\">Join</button>\n    <button *ngIf=\"joinedEvent\" mat-button (click)=\"onLeaveEvent(i)\">Leave</button>\n    <button *ngIf=\"!showComments\" mat-button (click)=\"toggleComments(i)\">Show Comments</button>\n    <button *ngIf=\"showComments\" mat-button (click)=\"toggleComments(i)\">Hide Comments</button>\n    <app-comments [eventId]=\"eventId\" *ngIf=\"showComments\"></app-comments>\n\n  </div>\n\n  </mat-card-actions>\n</mat-card>\n</div>\n"
+module.exports = "\n<div mat-dialog-content >\n  <mat-card-content>\n      <div mat-dialog-title *ngIf=\"loggedIn\">\n          <button *ngIf=\"(event.host._id == user.id || event.host.id == user.id)  && !editMode && !editImageMode\" mat-raised-button color=\"warn\" (click)=\"onDeleteEvent()\">delete</button>\n          <button *ngIf=\"(event.host._id == user.id || event.host.id == user.id) && !editMode && !editImageMode\" mat-raised-button color=\"primary\" (click)=\"onEditEvent()\">Edit Event</button>\n          <button *ngIf=\"(event.host._id == user.id || event.host.id == user.id) && !editMode && !editImageMode\" mat-raised-button color=\"accent\" (click)=\"fileInput.click()\">Change Image</button>\n          <button  *ngIf=\"editImageMode && !editMode\" mat-raised-button color=\"primary\" (click)=\"uploadPhoto()\">save</button>\n          <button *ngIf=\"editImageMode && !editMode\"  mat-raised-button color=\"warn\" (click)=\"cancel()\">Cancel</button>\n          <button *ngIf=\"editMode && !editImageMode\" mat-raised-button color=\"primary\" (click)=\"onCancelEventChanges()\">Cancel changes</button>\n          <button *ngIf=\"editMode && !editImageMode\" type=\"submit\" mat-raised-button color=\"accent\" (click)=\"convertAddress()\">confirm changes</button>\n          </div>\n          \n    \n\n\n    <form action=\"\"  #f=\"ngForm\"  *ngIf=\"editMode && loggedIn\">\n      <div class=\"form-group\" >\n        <label>Edit name</label>\n        <input  type=\"text\" [ngModel]=\"event.name\"  name=\"eventname\" class=\"form-control\" required >\n        <!-- <span *ngIf=\"!eventname.valid && eventname.touched\">please enter a name</span> -->\n      </div>\n      \n      <div class=\"form-group\" >\n          <div class=\"form-group\" >\n              <label>Edit details</label>\n              <textarea [ngModel]=\"event.details\" rows=\"4\" cols=\"50\"  #details=ngModel name=\"details\" class=\"form-control\" required  ></textarea>\n            </div>\n\n            <label>Edit location</label>\n            <div class=\"form-group\" >\n              <label>Location</label>\n              <input type=\"text\" [(ngModel)]=\"searchLocation\" placeholder=\"Search for Location\" autocorrect=\"off\" autocapitalize=\"off\" spellcheck=\"off\" class=\"form-control\" #search ngModel #location=ngModel name=\"location\" required> \n          </div>\n\n\n        <label>Edit date</label>\n          <input [ngModel]=\"data.eventDate\"  #date=ngModel name=\"date\" class=\"form-control\" required matInput [matDatepicker]=\"picker\" placeholder='Date:{{month[data.eventDate.month]}}/{{data.eventDate.day}}/{{data.eventDate.year}}'>\n          <mat-datepicker-toggle matSuffix [for]=\"picker\"></mat-datepicker-toggle>\n          <mat-datepicker #picker></mat-datepicker>\n      </div>\n      \n      </form>    \n  </mat-card-content>\n  <input  #fileInput style=\"display: none\" type=\"file\" (change)=\"onFileSelected($event)\">\n</div>\n\n\n<div mat-dialog-content>\n  <mat-card *ngIf=\"event\" class=\"example-card\">\n    <div  class=\"form-group\" enctype=\"multipart/form-data\">\n      \n\n     \n    </div>\n  <mat-card-header>\n    <img  [src]=\"event.host.profilePic\" mat-card-avatar class=\"example-header-image\">\n    <mat-card-subtitle>created by:{{event.host.firstname}} {{event.host.lastname}}</mat-card-subtitle>\n    <mat-card-subtitle>name of the event:{{event.name}}</mat-card-subtitle>\n\n    <mat-card-subtitle>Date:{{month[data.eventDate.month]}}/{{data.eventDate.day}}/{{data.eventDate.year}}</mat-card-subtitle>\n    \n    <mat-card-subtitle>Amount Attending:{{event.attending.length}}</mat-card-subtitle>\n    <div>\n   \n  </div>\n  </mat-card-header>\n  <img  mat-card-image [src]=\"event.image\"  height=\"142\" width=\"142\" >\n  <mat-card-content>\n    <h4>About</h4>\n    <p>\n        {{event.details}}\n    </p>\n\n    \n    <button *ngIf=\"!showAttending && event.attending.length > 0\" mat-button (click)=\"toggleAttending()\">{{event.attending.length}} People are coming</button>\n    <button *ngIf=\"showAttending && event.attending.length > 0\" mat-button (click)=\"toggleAttending()\">Hide whos coming</button>\n    <div *ngIf=\"showAttending\">\n        <hr>\n        <h1>Join these guys</h1>\n        <ngx-slick  class=\"carousel\" #slickModal=\"slick-modal\" [config]=\"slideConfig\">\n\n        \n        \n          <div class=\"polaroid\" ngxSlickItem *ngFor=\"let attending of event.attending\">\n              <img [src]=\"attending.profilePic\" alt=\"Norway\" style=\"width:100%\">\n              <div class=\"container\">\n                <h2>{{attending.firstname}} {{attending.lastname}}</h2>\n              </div>\n            </div>\n            </ngx-slick>\n    </div>\n\n\n    <h4>Where</h4>\n    {{event.location.formattedAddress}} \n    <agm-map [latitude]=\"event.location.lat\" [longitude]=\"event.location.lng\" >\n       <agm-marker [latitude]=\"event.location.lat\" [longitude]=\"event.location.lng\"></agm-marker>\n    </agm-map>\n  </mat-card-content>\n  <mat-card-actions>\n    <div *ngIf=\"loggedIn\">\n    <button *ngIf=\"!joinedEvent\" mat-button (click)=\"onJoinEvent(i)\">Join</button>\n    <button *ngIf=\"joinedEvent\" mat-button (click)=\"onLeaveEvent(i)\">Leave</button>\n    <button *ngIf=\"!showComments\" mat-button (click)=\"toggleComments(i)\">Show Comments</button>\n    <button *ngIf=\"showComments\" mat-button (click)=\"toggleComments(i)\">Hide Comments</button>\n    <app-comments [eventId]=\"eventId\" *ngIf=\"showComments\"></app-comments>\n\n  </div>\n\n  </mat-card-actions>\n</mat-card>\n</div>\n"
 
 /***/ }),
 
@@ -796,6 +767,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
 /* harmony import */ var _services_events_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../services/events.service */ "./src/app/services/events.service.ts");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _angular_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/http */ "./node_modules/@angular/http/fesm5/http.js");
+/* harmony import */ var _agm_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @agm/core */ "./node_modules/@agm/core/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -812,11 +785,16 @@ var __param = (undefined && undefined.__param) || function (paramIndex, decorato
 
 
 
+
+
 var SingleEventComponent = /** @class */ (function () {
-    function SingleEventComponent(data, eventsService, dialogRef) {
+    function SingleEventComponent(data, eventsService, dialogRef, mapsAPILoader, ngZone, http) {
         this.data = data;
         this.eventsService = eventsService;
         this.dialogRef = dialogRef;
+        this.mapsAPILoader = mapsAPILoader;
+        this.ngZone = ngZone;
+        this.http = http;
         this.slideConfig = { "slidesToShow": 1, "slidesToScroll": 1 };
         this.closeDialog = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
         this.month = ["January", "February", "March", "April", "May", "June", "July",
@@ -825,6 +803,28 @@ var SingleEventComponent = /** @class */ (function () {
         this.showComments = false;
         this.datee = this.data.eventDate.year.toString();
     }
+    Object.defineProperty(SingleEventComponent.prototype, "content", {
+        set: function (content) {
+            var _this = this;
+            this.searchElement = content;
+            if (this.searchElement != undefined) {
+                this.mapsAPILoader.load().then(function () {
+                    console.log("is this running");
+                    var autocomplete = new google.maps.places.Autocomplete(_this.searchElement.nativeElement, { types: ["address"] });
+                    autocomplete.addListener("place_changed", function () {
+                        _this.ngZone.run(function () {
+                            var place = autocomplete.getPlace();
+                            if (place.geometry === undefined || place.geometry === null) {
+                                return;
+                            }
+                        });
+                    });
+                });
+            }
+        },
+        enumerable: true,
+        configurable: true
+    });
     SingleEventComponent.prototype.toggleComments = function () {
         this.showComments = !this.showComments;
     };
@@ -866,6 +866,46 @@ var SingleEventComponent = /** @class */ (function () {
         this.editImageMode = false;
         this.event.image = this.tempPic;
     };
+    SingleEventComponent.prototype.convertAddress = function () {
+        var _this = this;
+        if (this.event.location != this.searchElement.nativeElement.value) {
+            console.log("converting");
+            this.http.get('https://maps.googleapis.com/maps/api/geocode/json?address=' +
+                this.searchElement.nativeElement.value + '&key=AIzaSyB9apYkFiLPc7Q0onb1fFfemAB8cLVVoiI')
+                .subscribe(function (res) {
+                _this.lat = res.json().results[0].geometry.location.lat;
+                _this.lng = res.json().results[0].geometry.location.lng;
+                _this.formattedAddress = res.json().results[0].formatted_address;
+                for (var ac = 0; ac < res.json().results[0].address_components.length; ac++) {
+                    var component = res.json().results[0].address_components[ac];
+                    if (component.types.includes('sublocality') || component.types.includes('locality')) {
+                        _this.city = component.long_name;
+                    }
+                    else if (component.types.includes('administrative_area_level_1')) {
+                        _this.state = component.long_name;
+                    }
+                    else if (component.types.includes('country')) {
+                        _this.country = component.long_name;
+                    }
+                }
+                _this.locationInfo =
+                    {
+                        lat: _this.lat,
+                        lng: _this.lng,
+                        formattedAddress: _this.formattedAddress,
+                        city: _this.city,
+                        state: _this.state,
+                        country: _this.country
+                    };
+                console.log(_this.locationInfo);
+                _this.onConfirmEventChanges();
+            });
+        }
+        else {
+            this.locationInfo = this.event.location;
+            this.onConfirmEventChanges();
+        }
+    };
     SingleEventComponent.prototype.onConfirmEventChanges = function () {
         var _this = this;
         console.log(" host " + this.user.profilePic);
@@ -873,12 +913,14 @@ var SingleEventComponent = /** @class */ (function () {
         if (this.data.eventDate == this.eventform.value.date) {
             this.eventform.value.date = null;
         }
+        console.log(this.locationInfo);
         eventChanges =
             {
                 name: this.eventform.value.eventname,
                 details: this.eventform.value.details,
                 date: this.eventform.value.date || null,
                 eventId: this.data.eventId,
+                location: this.locationInfo,
                 join: true
             };
         console.log("changed vent " + eventChanges);
@@ -897,6 +939,7 @@ var SingleEventComponent = /** @class */ (function () {
                 name: res.name,
                 details: res.details,
                 date: res.date,
+                location: res.location,
                 updatedEvent: "changed"
             };
             console.log(res);
@@ -950,7 +993,8 @@ var SingleEventComponent = /** @class */ (function () {
             // console.log("host: " + res.host.name +"attending: " + res.attending[0])
             _this.event = res;
             _this.eventId = res._id;
-            console.log(_this.eventId);
+            console.log(_this.event.location);
+            console.log(_this.locationInfo);
             if (JSON.parse(localStorage.getItem('user'))) {
                 _this.loggedIn = true;
                 for (var i = 0; i < _this.event.attending.length; i++) {
@@ -969,6 +1013,11 @@ var SingleEventComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('f'),
         __metadata("design:type", _angular_forms__WEBPACK_IMPORTED_MODULE_3__["NgForm"])
     ], SingleEventComponent.prototype, "eventform", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('search'),
+        __metadata("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"]),
+        __metadata("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"]])
+    ], SingleEventComponent.prototype, "content", null);
     SingleEventComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-single-event',
@@ -977,7 +1026,10 @@ var SingleEventComponent = /** @class */ (function () {
         }),
         __param(0, Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"])(_angular_material__WEBPACK_IMPORTED_MODULE_1__["MAT_DIALOG_DATA"])),
         __metadata("design:paramtypes", [Object, _services_events_service__WEBPACK_IMPORTED_MODULE_2__["EventsService"],
-            _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatDialogRef"]])
+            _angular_material__WEBPACK_IMPORTED_MODULE_1__["MatDialogRef"],
+            _agm_core__WEBPACK_IMPORTED_MODULE_5__["MapsAPILoader"],
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["NgZone"],
+            _angular_http__WEBPACK_IMPORTED_MODULE_4__["Http"]])
     ], SingleEventComponent);
     return SingleEventComponent;
 }());
@@ -1509,8 +1561,10 @@ var UsersCreatedEventsComponent = /** @class */ (function () {
                     _this.events[i].name = res.name || _this.events[i].name;
                     _this.events[i].details = res.details;
                     _this.events[i].date = res.date;
+                    _this.events[i].location = res.location;
                 }
                 else {
+                    _this.events[i].location = res.location;
                     _this.events[i].name = res.name;
                     _this.events[i].details = res.details;
                 }

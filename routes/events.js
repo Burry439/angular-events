@@ -205,10 +205,11 @@ router.put('/editevents',(req,res,next)=>{
         if(req.body.date != null)
         {   
             console.log("with date" + req.body.date.year)
-            Event.findByIdAndUpdate(req.body.eventId,{name:req.body.name,details:req.body.details,date:req.body.date},(err,updatedEvent)=>{
+            Event.findByIdAndUpdate(req.body.eventId,{name:req.body.name,details:req.body.details,date:req.body.date, location:req.body.location},(err,updatedEvent)=>{
                 updatedEvent.name = req.body.name
                 updatedEvent.details = req.body.details
                 updatedEvent.date = req.body.date
+                updatedEvent.location = req.body.location
                 console.log("updated event> " + updatedEvent +" < udpdared evebnt" )
                 res.json(updatedEvent)
             })
@@ -216,9 +217,10 @@ router.put('/editevents',(req,res,next)=>{
         else
         {   
             console.log("without date")
-            Event.findByIdAndUpdate(req.body.eventId,{name:req.body.name,details:req.body.details},(err,updatedEvent)=>{
+            Event.findByIdAndUpdate(req.body.eventId,{name:req.body.name,details:req.body.details,location:req.body.location},(err,updatedEvent)=>{
                 updatedEvent.name = req.body.name
                 updatedEvent.details = req.body.details
+                updatedEvent.location = req.body.location
                 console.log("updated event> " + updatedEvent +" < udpdared evebnt" )
                 res.json(updatedEvent)
             })
