@@ -265,7 +265,7 @@ router.put('/delete',(req,res,next) =>{
                 console.log(err)
             }else
             {
-                console.log("should delte")
+                res.json("should delte")
             }
     })  
 })
