@@ -134,6 +134,7 @@ router.post('/addevents',(req,res,next)=>{
         details: req.body.details,
         location:req.body.location,
         date: req.body.date,
+        time: req.body.time,
          host: req.body.host,
         image: req.body.image
             
@@ -202,25 +203,63 @@ router.put('/leaveevent',(req,res,next) =>{
 
 
 router.put('/editevents',(req,res,next)=>{
-        if(req.body.date != null)
+        console.log(" req,body : " +req.body)
+        if(req.body.date != null && req.body.time != null)
         {   
+            
+            console.log("time and date")
             console.log("with date" + req.body.date.year)
-            Event.findByIdAndUpdate(req.body.eventId,{name:req.body.name,details:req.body.details,date:req.body.date, location:req.body.location},(err,updatedEvent)=>{
+            Event.findByIdAndUpdate(req.body.eventId,{name:req.body.name,details:req.body.details,  date:req.body.date,  time:req.body.time, location:req.body.location},(err,updatedEvent)=>{
                 updatedEvent.name = req.body.name
                 updatedEvent.details = req.body.details
                 updatedEvent.date = req.body.date
+                updatedEvent.time = req.body.time
+
                 updatedEvent.location = req.body.location
+                console.log("updated event> " + updatedEvent +" < udpdared evebnt" )
+                res.json(updatedEvent)
+            })
+
+
+        }
+        else if(req.body.date != null && req.body.time == null)
+        {   
+            console.log("just date")
+            Event.findByIdAndUpdate(req.body.eventId,{name:req.body.name,details:req.body.details , date:req.body.date ,location:req.body.location},(err,updatedEvent)=>{
+                updatedEvent.name = req.body.name
+                updatedEvent.details = req.body.details
+                updatedEvent.location = req.body.location
+                updatedEvent.time = updatedEvent.time
+                updatedEvent.date = req.body.date
+
+                console.log("updated event> " + updatedEvent +" < udpdared evebnt" )
+                res.json(updatedEvent)
+            })
+        }
+
+        else if(req.body.date == null && req.body.time != null)
+        {   
+            console.log("just time")
+            Event.findByIdAndUpdate(req.body.eventId,{name:req.body.name, details:req.body.details, time:req.body.time, location:req.body.location},(err,updatedEvent)=>{
+                updatedEvent.name = req.body.name
+                updatedEvent.details = req.body.details
+                updatedEvent.location = req.body.location
+                updatedEvent.date = updatedEvent.date
+                updatedEvent.time = req.body.time
                 console.log("updated event> " + updatedEvent +" < udpdared evebnt" )
                 res.json(updatedEvent)
             })
         }
         else
-        {   
-            console.log("without date")
-            Event.findByIdAndUpdate(req.body.eventId,{name:req.body.name,details:req.body.details,location:req.body.location},(err,updatedEvent)=>{
+        {
+            console.log("neither date or time")
+            Event.findByIdAndUpdate(req.body.eventId,{name:req.body.name, details:req.body.details,location:req.body.location},(err,updatedEvent)=>{
                 updatedEvent.name = req.body.name
                 updatedEvent.details = req.body.details
                 updatedEvent.location = req.body.location
+                updatedEvent.date = updatedEvent.date
+                updatedEvent.time = updatedEvent.time
+
                 console.log("updated event> " + updatedEvent +" < udpdared evebnt" )
                 res.json(updatedEvent)
             })
