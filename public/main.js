@@ -1435,8 +1435,22 @@ var UsersAttendingEventsComponent = /** @class */ (function () {
         this.user = JSON.parse(localStorage.getItem('user'));
         this.month = ["January", "February", "March", "April", "May", "June", "July",
             "August", "September", "October", "November", "December"];
-        this.slideConfig = { "slidesToShow": 1, "slidesToScroll": 1 };
+        this.slideConfig = { "slidesToShow": this.slidesToShow, "slidesToScroll": 1 };
+        this.onResize();
     }
+    UsersAttendingEventsComponent.prototype.onResize = function (event) {
+        this.screenHeight = window.innerHeight;
+        this.screenWidth = window.innerWidth;
+        if (this.screenWidth < 760) {
+            this.slidesToShow = 1;
+        }
+        else if (this.screenWidth > 760 && this.screenWidth < 1050) {
+            this.slidesToShow = 2;
+        }
+        else {
+            this.slidesToShow = 3;
+        }
+    };
     UsersAttendingEventsComponent.prototype.openDialog = function (i) {
         var _this = this;
         console.log(this.events[i]);
@@ -1533,6 +1547,12 @@ var UsersAttendingEventsComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
         __metadata("design:type", Object)
     ], UsersAttendingEventsComponent.prototype, "leaveEvents", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])('window:resize', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], UsersAttendingEventsComponent.prototype, "onResize", null);
     UsersAttendingEventsComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-users-attending-events',
@@ -1607,8 +1627,21 @@ var UsersCreatedEventsComponent = /** @class */ (function () {
         this.user = JSON.parse(localStorage.getItem('user'));
         this.month = ["January", "February", "March", "April", "May", "June", "July",
             "August", "September", "October", "November", "December"];
-        this.slideConfig = { "slidesToShow": 1, "slidesToScroll": 1 };
+        this.slideConfig = { "slidesToShow": this.slidesToShow, "slidesToScroll": 1 };
     }
+    UsersCreatedEventsComponent.prototype.onResize = function (event) {
+        this.screenHeight = window.innerHeight;
+        this.screenWidth = window.innerWidth;
+        if (this.screenWidth < 760) {
+            this.slidesToShow = 1;
+        }
+        else if (this.screenWidth > 760 && this.screenWidth < 1050) {
+            this.slidesToShow = 2;
+        }
+        else {
+            this.slidesToShow = 3;
+        }
+    };
     UsersCreatedEventsComponent.prototype.openDialog = function (i) {
         var _this = this;
         console.log(this.events[i]);
@@ -1712,6 +1745,12 @@ var UsersCreatedEventsComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
         __metadata("design:type", Object)
     ], UsersCreatedEventsComponent.prototype, "leaveEvents", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])('window:resize', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], UsersCreatedEventsComponent.prototype, "onResize", null);
     UsersCreatedEventsComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-users-created-events',
