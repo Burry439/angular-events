@@ -327,10 +327,12 @@ router.get('/getsingleevents', (req,res)=>{
 })
 
 router.get('/getevents', (req,res,next)=>{
-    Event.find().populate('host attending', 'firstname lastname profilePic' ).exec(function(err,host){
+    Event.find({},(err,events)=>{
+        res.json(events)  
+    })
         
-        res.json(host)  
-       })
+       
+    
     })
     
 
