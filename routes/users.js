@@ -37,7 +37,8 @@ const fileFilter = (req,file,cb)=>{
     }
     else
     {
-        cb(null,false)
+        req.fileValidationError = 'goes wrong on the mimetype';
+        return cb(null, false, new Error('goes wrong on the mimetype'));
     }
     
     
@@ -72,6 +73,13 @@ const upload = multer({
 
 router.put('/photo', upload.single('profilePic'), (req,res,next)=>
 {   
+
+    if(req.fileValidationError) {
+        console.log("yo")
+       return res.json("wrong");
+  }
+
+
     //console.log(req.file.filename)
     //console.log(req.headers.authorization)
     const id = JSON.parse(req.headers.authorization)

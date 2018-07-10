@@ -23,6 +23,7 @@ const storage = multer.diskStorage({
     filename: (req,file,cb) =>{
         cb(null, file.originalname)
     }
+    
 });
 
 const fileFilter = (req,file,cb)=>{
@@ -31,8 +32,10 @@ const fileFilter = (req,file,cb)=>{
         cb(null,true)
     }
     else
-    {
-        cb(null,false)
+    {   
+        req.fileValidationError = 'goes wrong on the mimetype';
+        return cb(null, false, new Error('goes wrong on the mimetype'));
+        
     }
     
     
@@ -71,8 +74,14 @@ const upload = multer({
 // })
 
 
-router.put('/photo', upload.single('eventImage'), (req,res,next)=>{   
-    console.log(req.file)
+router.put('/photo', upload.single('eventImage'), (req,res,err)=>{   
+
+
+    if(req.fileValidationError) {
+        console.log("yo")
+       return res.json("wrong");
+  }
+
     cloudinary.uploader.upload(req.file.path, function(result) { 
         console.log(result) 
         Event.findOne({_id:req.headers.authorization}, (err,event)=>{
