@@ -5,7 +5,7 @@ const Event = require('../models/event')
 const Comment = require('../models/comment')
 
 router.post('/addcomment',(req,res,next)=>{
-    console.log("add comment : " + req.body + " :<")
+    console.log("add comment : " + req.body.eventId + " :<")
     let newComment = new Comment({
         comment: req.body.comment,
         commenter:req.body.userId,
